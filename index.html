@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam Wohlstedt - Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- navigation sidebar -->
+    <nav class="sidebar">
+        <a href="#home" class="logo">Liam Wohlstedt</a>
+        <ul class="nav-links">
+            <li><a href="#home" class="nav-link active">~</a></li>
+            <li><a href="#me" class="nav-link">Me</a></li>
+            <li><a href="#experience" class="nav-link">Experience</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+    <!-- home section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1 class="greeting">Welcome!<br>I'm Liam</h1>
+                <p class="intro">
+                    This website is just for me to show the world what I do, eventually I think I'm going to make it look super cool but for now I like the minimalist look
+                </p>
+                <div class="features">
+                    <div class="links-grid">
+                        <a href="#me" class="feature-link">Me</a>
+                        <a href="#experience" class="feature-link">Experience</a>
+                        <a href="#projects" class="feature-link">Projects</a>
+                        <a href="#contact" class="feature-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <pre class="hero-ascii">
+╔══════════════════════════╗
+║  ┌────────────────────┐  ║
+║  │ > liam@dev:~$_     │  ║
+║  │                    │  ║
+║  │ System online...   │  ║
+║  │ Loading portfolio  │  ║
+║  │ [████████████] 100%│  ║
+║  │                    │  ║
+║  └────────────────────┘  ║
+║  ◉ ◉ ◉              [×]  ║
+╚══════════════════════════╝
+   ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+        ║ ║
+    ════╩═╩════
+            </pre>
+        </div>
+    </section>
+
+    <!-- me section -->
+    <section id="me" class="section">
+        <h2>Me</h2>
+        <div class="about-content">
+            <p>
+                I'm a junior developer with an interest in systems, embedded development, and problem-solving.
+                I like learning by building real projects and challenging myself to understand how things work behind the scenes.
+                Currently, I'm learning C++ and diving deep into how low-level systems work.
+            </p>
+
+            <div class="me-section">
+                <h3>Life Outside Code</h3>
+                <div class="image-grid">
+                    <img src="pictures/me&gf.jpg" alt="Me and my girlfriend" class="me-image">
+                    <img src="pictures/cat.jpg" alt="My cat" class="me-image">
+                </div>
+                <p>
+                    When I'm not deep in code, I spend most of my time with my girlfriend and our cat. They keep me grounded
+                    and remind me there's more to life than staring at screens all day. Though I do enjoy a good screen session,
+                    having people (and a cat) who matter makes everything better.
+                </p>
+            </div>
+
+            <div class="me-section">
+                <h3>My Setup</h3>
+                <img src="pictures/image.jpg" alt="My setup" class="me-image">
+                <p>
+                    I dual boot Ubuntu and Windows on my main machine. I've experimented with a bunch of different Linux distros
+                    over the years, but Arch was a bit too much for me to maintain day-to-day. Ubuntu gives me the stability I need
+                    while still letting me tinker when I want to.
+                </p>
+            </div>
+
+            <div class="me-section">
+                <h3>Keyboards</h3>
+                <img src="pictures/keyboard.jpg" alt="My Keychron Q11 keyboard" class="me-image keyboard-image">
+                <p>
+                    I'm really into mechanical keyboards. My current daily driver is a Keychron Q11 with Cream Yellow Pro switches
+                    and blank black keycaps. It's tape modded for that deeper sound. There's something satisfying about building
+                    and customizing your own keyboard exactly how you want it.
+                </p>
+            </div>
+
+            <div class="me-section">
+                <h3>What I'm Into</h3>
+                <p>
+                    Beyond coding and keyboard builds, I like experimenting with random tech projects, exploring new Linux tools
+                    and workflows, and occasionally gaming. I'm always looking for new things to learn and build.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- experience section -->
+        <section id="experience" class="section">
+            <h2>Experience</h2>
+            <div class="about-content">
+                <article class="experience-item">
+                    <h3>IT Support Technician — MSAB</h3>
+                    <p class="project-date">Jun 2025 – Present</p>
+                    <ul class="experience-list">
+                        <li>Provided technical support for 200+ users, resolving hardware, software, and network issues with high first-contact resolution.</li>
+                        <li>Managed user lifecycle and workstation deployment via Azure AD, Active Directory, Intune, and Microsoft 365 services.</li>
+                        <li>Maintained server and network infrastructure, including patching servers, configuring routers/switches, and documenting processes in Confluence.</li>
+                    </ul>
+                    <p class="experience-tech"><strong>Tools:</strong> Windows, Linux, Jira, PowerShell, Azure AD, Active Directory, Intune, Microsoft 365, Confluence</p>
+                </article>
+
+                <article class="experience-item">
+                    <h3>Junior Frontend Developer — Heimdaller</h3>
+                    <p class="project-date">Apr 2024 – Sep 2024</p>
+                    <ul class="experience-list">
+                        <li>Developed responsive company website and interactive customer-facing features using HTML, CSS, and JavaScript.</li>
+                        <li>Built booking forms, dashboards, and API integrations to enable customers to track IT support requests online.</li>
+                        <li>Collaborated with backend developers to implement and test features, ensuring cross-browser and responsive compatibility.</li>
+                    </ul>
+                    <p class="experience-tech"><strong>Tools:</strong> HTML, CSS, JavaScript, REST APIs, Chrome/Firefox/Safari</p>
+                </article>
+
+                <article class="experience-item">
+                    <h3>Automation Intern — VCG</h3>
+                    <p class="project-date">May 2021 – Dec 2021</p>
+                    <ul class="experience-list">
+                        <li>Automated data collection from EV charging stations using Python and Pandas, reducing manual data entry by 40%.</li>
+                        <li>Created scheduled scripts in Python and PowerShell to generate automated reports and move files between systems.</li>
+                        <li>Developed data visualizations and dashboards to help management track station utilization and revenue trends.</li>
+                    </ul>
+                    <p class="experience-tech"><strong>Tools:</strong> Python, PowerShell, Pandas, Excel, APIs, Databases</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- projects section -->
+        <section id="projects" class="section">
+            <h2>Projects</h2>
+            <div class="projects-container">
+                <!-- left column -->
+                <div class="project-column">
+                    <h3 class="column-title">Hardware & Embedded</h3>
+                    <article class="project-card">
+                        <h3>Arduino Temperature Monitor</h3>
+                        <p class="project-description">
+                            A temperature and humidity monitoring system using Arduino and DHT22 sensor.
+                            Displays readings on LCD screen and logs data to SD card.
+                        </p>
+                        <p class="project-tech"><strong>Tech:</strong> C++, Arduino, DHT22, LCD</p>
+                        <a href="https://github.com/yourusername/temp-monitor" class="project-link">GitHub →</a>
+                    </article>
+
+                    <article class="project-card">
+                        <h3>LED Matrix Display</h3>
+                        <p class="project-description">
+                            Custom LED matrix controller with animations and text scrolling.
+                            Controlled via serial interface.
+                        </p>
+                        <p class="project-tech"><strong>Tech:</strong> C++, Arduino, MAX7219</p>
+                        <a href="https://github.com/yourusername/led-matrix" class="project-link">GitHub →</a>
+                    </article>
+                </div>
+
+                <!-- right column -->
+                <div class="project-column">
+                    <h3 class="column-title">Software & Tools</h3>
+                    <article class="project-card">
+                        <h3>System Resource Monitor</h3>
+                        <p class="project-description">
+                            A lightweight CLI tool written in C++ that monitors CPU, memory, and disk usage.
+                            Displays real-time stats in the terminal.
+                        </p>
+                        <p class="project-tech"><strong>Tech:</strong> C++, Linux, /proc filesystem</p>
+                        <a href="https://github.com/yourusername/resource-monitor" class="project-link">GitHub →</a>
+                    </article>
+
+                    <article class="project-card">
+                        <h3>Automation Scripts</h3>
+                        <p class="project-description">
+                            Collection of Python scripts for automating repetitive tasks like file organization,
+                            batch renaming, and system backups.
+                        </p>
+                        <p class="project-tech"><strong>Tech:</strong> Python, bash, cron</p>
+                        <a href="https://github.com/yourusername/automation-scripts" class="project-link">GitHub →</a>
+                    </article>
+
+                    <article class="project-card">
+                        <h3>Personal Portfolio Site</h3>
+                        <p class="project-description">
+                            This website! Built from scratch with TypeScript to learn web development
+                            and have a place to showcase my work.
+                        </p>
+                        <p class="project-tech"><strong>Tech:</strong> TypeScript, HTML, CSS</p>
+                        <a href="https://github.com/yourusername/portfolio" class="project-link">GitHub →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact section -->
+        <section id="contact" class="section">
+            <h2>Contact</h2>
+            <div class="contact-content">
+                <p></p>
+                <div class="contact-info">
+                    <p><strong>Email:</strong> <span class="email-copy" data-email="Liam@wohlstedt.com">Liam@wohlstedt.com</span></p>
+                    <p><strong>GitHub:</strong> <a href="https://github.com/lwwdev" class="contact-link" target="_blank">github.com/lwwdev</a></p>
+                    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/liamww" class="contact-link" target="_blank">linkedin.com/in/liamww</a></p>
+                    <p><strong>Resume:</strong> <a href="pictures/Liamw Resume - 2025.docx.pdf" class="contact-link" target="_blank">View Resume (PDF)</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="dist/app.js"></script>
+</body>
+</html>

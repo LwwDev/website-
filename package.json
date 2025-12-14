@@ -1,0 +1,22 @@
+{
+  "name": "personal-website",
+  "version": "1.0.0",
+  "description": "A personal portfolio website built with TypeScript",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "npm run build && npx serve ."
+  },
+  "keywords": [
+    "portfolio",
+    "typescript",
+    "personal-website"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "serve": "^14.2.1"
+  }
+}
