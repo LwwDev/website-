@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam Wohlstedt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- browser tab bar -->
+    <nav class="tabbar">
+        <div class="tabbar-inner">
+            <a href="#home" class="tab active" data-section="home">
+                <span class="tab-icon">⌂</span><span class="tab-label">~</span>
+            </a>
+            <a href="#me" class="tab" data-section="me">
+                <span class="tab-label">Me</span>
+            </a>
+            <a href="#experience" class="tab" data-section="experience">
+                <span class="tab-label">Experience</span>
+            </a>
+            <a href="#projects" class="tab" data-section="projects">
+                <span class="tab-label">Projects</span>
+            </a>
+            <a href="#activity" class="tab" data-section="activity">
+                <span class="tab-label">Activity</span>
+            </a>
+            <a href="#graph" class="tab" data-section="graph">
+                <span class="tab-label">Graph</span>
+            </a>
+            <a href="#contact" class="tab" data-section="contact">
+                <span class="tab-label">Contact</span>
+            </a>
+        </div>
+        <div class="tabbar-url">
+            <span class="url-scheme">https://</span><span class="url-host">liamwohlstedt.xyz</span><span class="url-path" id="url-path">/</span>
+        </div>
+    </nav>
+
+    <main class="content">
+
+    <!-- home section -->
+    <section id="home" class="section active">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-prompt">
+                    <span class="prompt-symbol">&gt;</span>
+                    <span class="prompt-text">whoami</span>
+                </div>
+                <h1 class="hero-name">Liam<br>Wohlstedt</h1>
+                <p class="hero-role">
+                    <span class="role-slash">/</span>software developer
+                </p>
+                <div class="hero-divider"></div>
+                <p class="intro">
+                    This website is just for me to show the world what I do, eventually I think
+                    I'm going to make it look super cool but for now I like the minimalist look
+                </p>
+                <div class="features">
+                    <div class="links-grid">
+                        <a href="#me" class="feature-link">
+                            <span class="feature-num">01</span><span>Me</span>
+                        </a>
+                        <a href="#experience" class="feature-link">
+                            <span class="feature-num">02</span><span>Experience</span>
+                        </a>
+                        <a href="#projects" class="feature-link">
+                            <span class="feature-num">03</span><span>Projects</span>
+                        </a>
+                        <a href="#activity" class="feature-link">
+                            <span class="feature-num">04</span><span>Activity</span>
+                        </a>
+                        <a href="#graph" class="feature-link">
+                            <span class="feature-num">05</span><span>Graph</span>
+                        </a>
+                        <a href="#contact" class="feature-link">
+                            <span class="feature-num">06</span><span>Contact</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <span class="terminal-title">lwwdev — bash</span>
+                </div>
+                <pre class="terminal-body"><span class="t-cmd">$ fastfetch</span>
+
+<span class="t-bold">lwwdev</span>
+<span class="t-sep">──────────────────────</span>
+<span class="t-label">name    </span><span class="t-value">Liam Wohlstedt</span>
+<span class="t-label">role    </span><span class="t-value">Software Developer</span>
+<span class="t-label">os      </span><span class="t-value">Ubuntu / Windows 11</span>
+<span class="t-label">shell   </span><span class="t-value">bash</span>
+<span class="t-label">focus   </span><span class="t-value">Security, Systems, Web</span>
+<span class="t-label">lang    </span><span class="t-value">C++, C#, Python, TS</span>
+<span class="t-label">uptime  </span><span class="t-value">since 2023</span>
+<span class="t-label">status  </span><span class="t-value">online</span>
+<span class="t-sep">──────────────────────</span>
+<span class="t-sw t-c1">███</span><span class="t-sw t-c2">███</span><span class="t-sw t-c3">███</span><span class="t-sw t-c4">███</span><span class="t-sw t-c5">███</span><span class="t-sw t-c6">███</span><span class="t-sw t-c7">███</span><span class="t-sw t-c8">███</span>
+<span class="cursor">█</span></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- me section -->
+    <section id="me" class="section">
+        <div class="section-header">
+            <span class="section-num">01</span>
+            <h2>Me</h2>
+        </div>
+        <div class="about-content">
+            <p>
+                I'm a software developer with a background spanning systems, automation, IT infrastructure, and web development.
+                I like learning by building real projects and digging into how things work at a low level.
+                Currently working on digital security software at MSAB.
+            </p>
+
+            <div class="me-section">
+                <h3>Life Outside Code</h3>
+                <div class="image-grid">
+                    <img src="pictures/me&gf.jpg" alt="Me and my girlfriend" class="me-image">
+                    <img src="pictures/cat.jpg" alt="My cat" class="me-image">
+                </div>
+                <p>
+                    When I'm not deep in code, I spend most of my time with my girlfriend and our cat. They keep me grounded
+                    and remind me there's more to life than staring at screens all day. Though I do enjoy a good screen session,
+                    having people (and a cat) who matter makes everything better.
+                </p>
+            </div>
+
+            <div class="me-section">
+                <h3>My Setup</h3>
+                <img src="pictures/image.jpg" alt="My setup" class="me-image">
+                <p>
+                    I dual boot Ubuntu and Windows on my main machine. I've experimented with a bunch of different Linux distros
+                    over the years, but Arch was a bit too much for me to maintain day-to-day. Ubuntu gives me the stability I need
+                    while still letting me tinker when I want to.
+                </p>
+            </div>
+
+            <div class="me-section">
+                <h3>Keyboards</h3>
+                <img src="pictures/keyboard.jpg" alt="My Keychron Q11 keyboard" class="me-image keyboard-image">
+                <p>
+                    I'm really into mechanical keyboards. My current daily driver is a Keychron Q11 with Cream Yellow Pro switches
+                    and blank black keycaps. It's tape modded for that deeper sound. There's something satisfying about building
+                    and customizing your own keyboard exactly how you want it.
+                </p>
+            </div>
+
+            <div class="me-section">
+                <h3>What I'm Into</h3>
+                <p>
+                    Beyond coding and keyboard builds, I like experimenting with random tech projects, exploring new Linux tools
+                    and workflows, and occasionally gaming. I'm always looking for new things to learn and build.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- experience section -->
+    <section id="experience" class="section">
+        <div class="section-header">
+            <span class="section-num">02</span>
+            <h2>Experience</h2>
+        </div>
+        <div class="about-content">
+            <article class="experience-item">
+                <div class="exp-header">
+                    <div>
+                        <h3>Software Developer</h3>
+                        <span class="exp-company">MSAB</span>
+                    </div>
+                    <p class="project-date">Apr 2026 – Present</p>
+                </div>
+                <ul class="experience-list">
+                    <li>Working on the Unicore team building digital forensics and security software used by law enforcement worldwide.</li>
+                    <li>Contributing to tools that help investigators extract and analyze data from digital devices.</li>
+                </ul>
+                <p class="experience-tech">C++ · C# · .NET · Windows · Linux</p>
+            </article>
+
+            <article class="experience-item">
+                <div class="exp-header">
+                    <div>
+                        <h3>IT Associate</h3>
+                        <span class="exp-company">Voi Technology</span>
+                    </div>
+                    <p class="project-date">Feb 2026 – Apr 2026</p>
+                </div>
+                <ul class="experience-list">
+                    <li>Built automation workflows using n8n with JavaScript, TypeScript, and Python to streamline internal processes.</li>
+                    <li>Led migration of company phone subscriptions from Telia to Tele2, automating the porting process end-to-end.</li>
+                </ul>
+                <p class="experience-tech">n8n · JavaScript · TypeScript · Python · REST APIs</p>
+            </article>
+
+            <article class="experience-item">
+                <div class="exp-header">
+                    <div>
+                        <h3>IT Support Engineer</h3>
+                        <span class="exp-company">MSAB</span>
+                    </div>
+                    <p class="project-date">Jun 2025 – Feb 2026</p>
+                </div>
+                <ul class="experience-list">
+                    <li>Provided technical support for 200+ users, resolving hardware, software, and network issues with high first-contact resolution.</li>
+                    <li>Managed user lifecycle and workstation deployment via Azure AD, Active Directory, Intune, and Microsoft 365 services.</li>
+                    <li>Maintained server and network infrastructure, including patching servers, configuring routers/switches, and documenting processes in Confluence.</li>
+                </ul>
+                <p class="experience-tech">Windows · Linux · Jira · PowerShell · Azure AD · Active Directory · Intune · Microsoft 365 · Confluence</p>
+            </article>
+
+            <article class="experience-item">
+                <div class="exp-header">
+                    <div>
+                        <h3>Junior Backend Developer</h3>
+                        <span class="exp-company">Heimdaller</span>
+                    </div>
+                    <p class="project-date">Jan 2025 – Jun 2025</p>
+                </div>
+                <ul class="experience-list">
+                    <li>Built backend services and REST API integrations enabling customers to track IT support requests online.</li>
+                    <li>Developed booking systems and dashboards collaborating closely with frontend developers.</li>
+                    <li>Ensured reliability, performance, and cross-browser compatibility across features.</li>
+                </ul>
+                <p class="experience-tech">JavaScript · Node.js · REST APIs · HTML · CSS</p>
+            </article>
+
+            <article class="experience-item">
+                <div class="exp-header">
+                    <div>
+                        <h3>Junior Developer</h3>
+                        <span class="exp-company">VCG – Vehicle Charge Grid</span>
+                    </div>
+                    <p class="project-date">Jun 2023 – Jan 2024</p>
+                </div>
+                <ul class="experience-list">
+                    <li>Automated data collection from EV charging stations using Python and Pandas, reducing manual data entry by 40%.</li>
+                    <li>Created scheduled scripts in Python and PowerShell to generate automated reports and move files between systems.</li>
+                    <li>Developed data visualizations and dashboards to help management track station utilization and revenue trends.</li>
+                </ul>
+                <p class="experience-tech">Python · PowerShell · Pandas · Excel · APIs · Databases</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- projects section -->
+    <section id="projects" class="section">
+        <div class="section-header">
+            <span class="section-num">03</span>
+            <h2>Projects</h2>
+        </div>
+        <div class="projects-container">
+            <!-- left column -->
+            <div class="project-column">
+                <h3 class="column-title">Web &amp; Full-Stack</h3>
+                <article class="project-card">
+                    <h3>Linker</h3>
+                    <p class="project-description">
+                        A full-stack link management platform with URL shortening, click analytics,
+                        QR code generation, and link-in-bio pages.
+                    </p>
+                    <p class="project-tech">JavaScript · Node.js · PostgreSQL · React</p>
+                    <a href="https://github.com/LwwDev/linker" class="project-link">GitHub →</a>
+                </article>
+
+                <article class="project-card">
+                    <h3>Networked</h3>
+                    <p class="project-description">
+                        A developer-focused social platform combining LinkedIn and Twitter.
+                        Companies provide verified proof of work for developers, replacing endorsements with real evidence.
+                    </p>
+                    <p class="project-tech">TypeScript</p>
+                    <a href="https://github.com/LwwDev/networked" class="project-link">GitHub →</a>
+                </article>
+
+                <article class="project-card">
+                    <h3>Habit</h3>
+                    <p class="project-description">
+                        A habit tracking web app to help build and maintain daily routines.
+                    </p>
+                    <p class="project-tech">JavaScript</p>
+                    <a href="https://github.com/LwwDev/habit" class="project-link">GitHub →</a>
+                </article>
+            </div>
+
+            <!-- right column -->
+            <div class="project-column">
+                <h3 class="column-title">Systems &amp; C++</h3>
+                <article class="project-card">
+                    <h3>Enigma Machine CLI</h3>
+                    <p class="project-description">
+                        A command-line implementation of the WWII Enigma cipher machine.
+                        Supports configurable rotors, reflectors, and plugboard settings.
+                    </p>
+                    <p class="project-tech">C++</p>
+                    <a href="https://github.com/LwwDev/Enigma-machine-cli-tool" class="project-link">GitHub →</a>
+                </article>
+
+                <article class="project-card">
+                    <h3>Parser (C++)</h3>
+                    <p class="project-description">
+                        A parser built from scratch in C++ to explore language parsing concepts
+                        and low-level string processing.
+                    </p>
+                    <p class="project-tech">C++</p>
+                    <a href="https://github.com/LwwDev/parsercpp" class="project-link">GitHub →</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- activity section -->
+    <section id="activity" class="section">
+        <div class="section-header">
+            <span class="section-num">04</span>
+            <h2>Activity</h2>
+        </div>
+
+        <!-- app usage -->
+        <div class="activity-block">
+            <p class="activity-block-label">app usage</p>
+            <div class="usage-list">
+                <div class="usage-row">
+                    <span class="usage-name">league of legends</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:37%"></div></div>
+                    <span class="usage-pct">37%</span>
+                </div>
+                <div class="usage-row">
+                    <span class="usage-name">other</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:30%"></div></div>
+                    <span class="usage-pct">30%</span>
+                </div>
+                <div class="usage-row">
+                    <span class="usage-name">youtube</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:12%"></div></div>
+                    <span class="usage-pct">12%</span>
+                </div>
+                <div class="usage-row">
+                    <span class="usage-name">discord</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:11%"></div></div>
+                    <span class="usage-pct">11%</span>
+                </div>
+                <div class="usage-row">
+                    <span class="usage-name">research</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:5%"></div></div>
+                    <span class="usage-pct">5%</span>
+                </div>
+                <div class="usage-row">
+                    <span class="usage-name">programming</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:4%"></div></div>
+                    <span class="usage-pct">4%</span>
+                </div>
+                <div class="usage-row">
+                    <span class="usage-name">communication</span>
+                    <div class="usage-bar-wrap"><div class="usage-bar" style="width:1%"></div></div>
+                    <span class="usage-pct">1%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- input stats -->
+        <div class="activity-stats">
+            <div class="stat-item">
+                <span class="stat-value">1.74m</span>
+                <span class="stat-label">Left Clicks</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">7.12m</span>
+                <span class="stat-label">Right Clicks</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">29k</span>
+                <span class="stat-label">Middle Clicks</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">5.56m</span>
+                <span class="stat-label">Keypresses</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">3.80m</span>
+                <span class="stat-label">Mouse Movement</span>
+            </div>
+        </div>
+
+        <!-- 24h chart -->
+        <div class="activity-block">
+            <p class="activity-block-label">past 24 hours</p>
+            <canvas id="activity-chart" height="100"></canvas>
+            <div class="chart-labels">
+                <span>00:00</span>
+                <span>03:00</span>
+                <span>06:00</span>
+                <span>09:00</span>
+                <span>12:00</span>
+                <span>15:00</span>
+                <span>18:00</span>
+                <span>21:00</span>
+                <span>24:00</span>
+            </div>
+        </div>
+
+        <!-- weekly heatmap -->
+        <div class="activity-block">
+            <p class="activity-block-label">avg daily activity</p>
+            <div class="weekly-grid" id="weekly-grid"></div>
+        </div>
+
+        <p class="activity-note">* data is simulated for demonstration purposes</p>
+    </section>
+
+    <!-- graph section -->
+    <section id="graph" class="section">
+        <div class="section-header">
+            <span class="section-num">05</span>
+            <h2>Graph</h2>
+        </div>
+        <p class="graph-desc">A visual map of skills, projects, and experience. Hover to explore connections. Click to navigate.</p>
+        <canvas id="graph-canvas"></canvas>
+        <div class="graph-legend">
+            <div class="legend-item"><div class="legend-dot company-dot"></div><span>company</span></div>
+            <div class="legend-item"><div class="legend-dot project-dot"></div><span>project</span></div>
+            <div class="legend-item"><div class="legend-dot skill-dot"></div><span>skill</span></div>
+        </div>
+    </section>
+
+    <!-- contact section -->
+    <section id="contact" class="section">
+        <div class="section-header">
+            <span class="section-num">06</span>
+            <h2>Contact</h2>
+        </div>
+        <div class="contact-content">
+            <p>I'm always open to interesting conversations, collaborations, or just a chat about tech.</p>
+            <div class="contact-info">
+                <div class="contact-row">
+                    <span class="contact-label">email</span>
+                    <span class="email-copy" data-email="Liam@wohlstedt.com">Liam@wohlstedt.com</span>
+                </div>
+                <div class="contact-row">
+                    <span class="contact-label">github</span>
+                    <a href="https://github.com/lwwdev" class="contact-link" target="_blank">github.com/lwwdev</a>
+                </div>
+                <div class="contact-row">
+                    <span class="contact-label">linkedin</span>
+                    <a href="https://linkedin.com/in/liamww" class="contact-link" target="_blank">linkedin.com/in/liamww</a>
+                </div>
+                <div class="contact-row">
+                    <span class="contact-label">resume</span>
+                    <a href="pictures/Liamw Resume - 2025.docx.pdf" class="contact-link" target="_blank">View Resume (PDF)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <script src="dist/app.js"></script>
+</body>
+</html>

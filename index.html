@@ -3,227 +3,908 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liam Wohlstedt - Developer Portfolio</title>
+    <title>Liam Wohlstedt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <!-- navigation sidebar -->
-    <nav class="sidebar">
-        <a href="#home" class="logo">Liam Wohlstedt</a>
-        <ul class="nav-links">
-            <li><a href="#home" class="nav-link active">~</a></li>
-            <li><a href="#me" class="nav-link">Me</a></li>
-            <li><a href="#experience" class="nav-link">Experience</a></li>
-            <li><a href="#projects" class="nav-link">Projects</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-    </nav>
+<body id="top">
+    <nav id="section-progress" aria-label="Page sections"></nav>
+    <canvas id="cursor-fx" aria-hidden="true"></canvas>
+    <div class="cursor-shell" aria-hidden="true">
+        <div id="cursor-ring" class="cursor-ring"></div>
+        <div id="cursor-dot" class="cursor-dot"></div>
+    </div>
 
-    <main class="content">
-    <!-- home section -->
-    <section id="home" class="section active">
+    <section class="hero-section">
         <div class="hero">
             <div class="hero-content">
-                <h1 class="greeting">Welcome!<br>I'm Liam</h1>
-                <p class="intro">
-                    This website is just for me to show the world what I do, eventually I think I'm going to make it look super cool but for now I like the minimalist look
-                </p>
-                <div class="features">
-                    <div class="links-grid">
-                        <a href="#me" class="feature-link">Me</a>
-                        <a href="#experience" class="feature-link">Experience</a>
-                        <a href="#projects" class="feature-link">Projects</a>
-                        <a href="#contact" class="feature-link">Contact</a>
+                <div class="hero-prompt">
+                    <span class="prompt-symbol">&gt;</span>
+                    <span class="prompt-text">whoami</span>
+                </div>
+                <h1 class="hero-name">Liam<br>Wohlstedt</h1>
+                <p class="hero-role"><span class="role-slash">/</span>software developer at MSAB</p>
+                <div class="hero-divider"></div>
+                <p class="intro" id="intro-message">Hello. You made it to my corner of the internet. This is where I keep the projects, experiments, and bits of life that have stuck with me.</p>
+                <pre class="hero-ascii" aria-hidden="true">
+             )\         O_._._._A_._._._O         /(
+              \`--.___,'=================`.___,--'/
+               \`--._.__                 __._,--'/
+                 \  ,. l`~~~~~~~~~~~~~~~'l ,.  /
+     __            \||(_)!_!_!_.-._!_!_!(_)||/            __
+     \\`-.__        ||_|____!!_|;|_!!____|_||        __,-'//
+      \\    `==---='-----------'='-----------`=---=='    //
+      | `--.                                         ,--' |
+       \  ,.`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',.  /
+         \||  ____,-------._,-------._,-------.____  ||/
+          ||\|___!`======="!`======="!`======="!___|/||
+          || |---||--------||-| | |-!!--------||---| ||
+__O_____O_ll_lO_____O_____O|| |'|'| ||O_____O_____Ol_ll_O_____O__
+o H o o H o o H o o H o o |-----------| o o H o o H o o H o o H o
+___H_____H_____H_____H____O =========== O____H_____H_____H_____H___
+                        /|=============|\
+()______()______()______() '==== +-+ ====' ()______()______()______()
+||{_}{_}||{_}{_}||{_}{_}/| ===== |_| ===== |\{_}{_}||{_}{_}||{_}{_}||
+||      ||      ||     / |==== s(   )s ====| \     ||      ||      ||
+======================()  =================  ()======================
+----------------------/| ------------------- |\----------------------
+                     / |---------------------| \
+-'--'--'           ()  '---------------------'  ()
+                 /| ------------------------- |\    --'--'--'
+     --'--'     / |---------------------------| \    '--'
+              ()  |___________________________|  ()           '--'-
+--'-          /| _______________________________  |\
+--' gpyy      / |__________________________________| \
+                </pre>
+            </div>
+            <div class="hero-terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <span class="terminal-title">lwwdev &mdash; profile</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-command"><span class="t-cmd">$ fastfetch --profile</span></div>
+                    <div class="terminal-stack">
+                        <div><span class="t-bold">lwwdev</span></div>
+                        <div class="terminal-divider"></div>
+                        <div class="terminal-row"><span class="t-label">role</span><span class="t-value">Software Developer</span></div>
+                        <div class="terminal-row"><span class="t-label">focus</span><span class="t-value">Security, systems, automation</span></div>
+                        <div class="terminal-row"><span class="t-label">stack</span><span class="t-value">C++, C#, Python, TypeScript</span></div>
+                        <div class="terminal-row"><span class="t-label">base</span><span class="t-value">Stockholm, Sweden</span></div>
+                        <div class="terminal-row"><span class="t-label">status</span><span class="t-value">Open to interesting conversations</span></div>
+                    </div>
+                    <div class="terminal-command"><span class="t-cmd">$ cat contact.txt</span></div>
+                    <div class="terminal-stack terminal-stack-compact">
+                        <div class="terminal-row"><span class="t-label">email</span><span class="email-copy terminal-copy" data-email="Liam@wohlstedt.com">Liam@wohlstedt.com</span></div>
+                        <div class="terminal-row"><span class="t-label">github</span><a href="https://github.com/LwwDev" class="terminal-link" target="_blank">github.com/LwwDev</a></div>
+                        <div class="terminal-row"><span class="t-label">linkedin</span><a href="https://linkedin.com/in/liamww" class="terminal-link" target="_blank">linkedin.com/in/liamww</a></div>
+                        <!-- <div class="terminal-row"><span class="t-label">resume</span><a href="pictures/Liamw Resume - 2025.docx.pdf" class="terminal-link" target="_blank">View resume PDF</a></div> -->
+                    </div>
+                    <div class="terminal-palette">
+                        <span class="t-sw t-c1">&#9608;&#9608;&#9608;</span><span class="t-sw t-c2">&#9608;&#9608;&#9608;</span><span class="t-sw t-c3">&#9608;&#9608;&#9608;</span><span class="t-sw t-c4">&#9608;&#9608;&#9608;</span><span class="t-sw t-c5">&#9608;&#9608;&#9608;</span><span class="t-sw t-c6">&#9608;&#9608;&#9608;</span><span class="t-sw t-c7">&#9608;&#9608;&#9608;</span><span class="t-sw t-c8">&#9608;&#9608;&#9608;</span>
+                        <span class="cursor">&#9608;</span>
                     </div>
                 </div>
             </div>
-            <pre class="hero-ascii">
-╔══════════════════════════╗
-║  ┌────────────────────┐  ║
-║  │ > liam@dev:~$_     │  ║
-║  │                    │  ║
-║  │ System online...   │  ║
-║  │ Loading portfolio  │  ║
-║  │ [████████████] 100%│  ║
-║  │                    │  ║
-║  └────────────────────┘  ║
-║  ◉ ◉ ◉              [×]  ║
-╚══════════════════════════╝
-   ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
-        ║ ║
-    ════╩═╩════
-            </pre>
         </div>
     </section>
 
-    <!-- me section -->
-    <section id="me" class="section">
-        <h2>Me</h2>
-        <div class="about-content">
-            <p>
-                I'm a junior developer with an interest in systems, embedded development, and problem-solving.
-                I like learning by building real projects and challenging myself to understand how things work behind the scenes.
-                Currently, I'm learning C++ and diving deep into how low-level systems work.
-            </p>
-
-            <div class="me-section">
-                <h3>Life Outside Code</h3>
-                <div class="image-grid">
-                    <img src="pictures/me&gf.jpg" alt="Me and my girlfriend" class="me-image">
-                    <img src="pictures/cat.jpg" alt="My cat" class="me-image">
-                </div>
-                <p>
-                    When I'm not deep in code, I spend most of my time with my girlfriend and our cat. They keep me grounded
-                    and remind me there's more to life than staring at screens all day. Though I do enjoy a good screen session,
-                    having people (and a cat) who matter makes everything better.
-                </p>
-            </div>
-
-            <div class="me-section">
-                <h3>My Setup</h3>
-                <img src="pictures/image.jpg" alt="My setup" class="me-image">
-                <p>
-                    I dual boot Ubuntu and Windows on my main machine. I've experimented with a bunch of different Linux distros
-                    over the years, but Arch was a bit too much for me to maintain day-to-day. Ubuntu gives me the stability I need
-                    while still letting me tinker when I want to.
-                </p>
-            </div>
-
-            <div class="me-section">
-                <h3>Keyboards</h3>
-                <img src="pictures/keyboard.jpg" alt="My Keychron Q11 keyboard" class="me-image keyboard-image">
-                <p>
-                    I'm really into mechanical keyboards. My current daily driver is a Keychron Q11 with Cream Yellow Pro switches
-                    and blank black keycaps. It's tape modded for that deeper sound. There's something satisfying about building
-                    and customizing your own keyboard exactly how you want it.
-                </p>
-            </div>
-
-            <div class="me-section">
-                <h3>What I'm Into</h3>
-                <p>
-                    Beyond coding and keyboard builds, I like experimenting with random tech projects, exploring new Linux tools
-                    and workflows, and occasionally gaming. I'm always looking for new things to learn and build.
-                </p>
-            </div>
+    <section class="graph-section">
+        <div class="graph-label">
+            <span class="graph-label-text">site map</span>
         </div>
+        <div class="graph-hero">
+            <canvas id="graph-canvas"></canvas>
+        </div>
+        <p class="graph-hint" id="graph-status">hover a node to preview that part of the site &middot; click to jump</p>
     </section>
 
-    <!-- experience section -->
-        <section id="experience" class="section">
-            <h2>Experience</h2>
+    <main class="page-content">
+
+        <section id="work" class="page-section">
+            <h2 class="section-title">Experience</h2>
             <div class="about-content">
                 <article class="experience-item">
-                    <h3>IT Support Technician — MSAB</h3>
-                    <p class="project-date">Jun 2025 – Present</p>
+                    <div class="exp-header">
+                        <div><h3>Software Developer</h3><span class="exp-company">MSAB</span></div>
+                        <p class="project-date">Apr 2026 &ndash; Present</p>
+                    </div>
+                    <ul class="experience-list">
+                        <li>Working on the Unicore team building digital forensics and security software used by law enforcement worldwide.</li>
+                        <li>Contributing to tools that help investigators extract and analyze data from digital devices.</li>
+                    </ul>
+                    <p class="experience-tech">C++ &middot; C# &middot; .NET &middot; Windows &middot; Linux</p>
+                </article>
+                <article class="experience-item">
+                    <div class="exp-header">
+                        <div><h3>IT Associate</h3><span class="exp-company">Voi Technology</span></div>
+                        <p class="project-date">Feb 2026 &ndash; Apr 2026</p>
+                    </div>
+                    <ul class="experience-list">
+                        <li>Built automation workflows using n8n with JavaScript, TypeScript, and Python to streamline internal processes.</li>
+                        <li>Led migration of company phone subscriptions from Telia to Tele2, automating the porting process end-to-end.</li>
+                    </ul>
+                    <p class="experience-tech">n8n &middot; JavaScript &middot; TypeScript &middot; Python &middot; REST APIs</p>
+                </article>
+                <article class="experience-item">
+                    <div class="exp-header">
+                        <div><h3>IT Support Engineer</h3><span class="exp-company">MSAB</span></div>
+                        <p class="project-date">Jun 2025 &ndash; Feb 2026</p>
+                    </div>
                     <ul class="experience-list">
                         <li>Provided technical support for 200+ users, resolving hardware, software, and network issues with high first-contact resolution.</li>
                         <li>Managed user lifecycle and workstation deployment via Azure AD, Active Directory, Intune, and Microsoft 365 services.</li>
                         <li>Maintained server and network infrastructure, including patching servers, configuring routers/switches, and documenting processes in Confluence.</li>
                     </ul>
+                    <p class="experience-tech">Windows &middot; Linux &middot; Jira &middot; PowerShell &middot; Azure AD &middot; Active Directory &middot; Intune &middot; Confluence</p>
                 </article>
-
                 <article class="experience-item">
-                    <h3>IT Technician — Heimdaller</h3>
-                    <p class="project-date">Aug 2023 – Jun 2025</p>
+                    <div class="exp-header">
+                        <div><h3>Junior Backend Developer</h3><span class="exp-company">Heimdaller</span></div>
+                        <p class="project-date">Jan 2025 &ndash; Jun 2025</p>
+                    </div>
                     <ul class="experience-list">
-                        <li>Provided B2C IT support for 50+ clients weekly, resolving hardware, software, and network issues.</li>
-                        <li>Guided clients through device setups, software installations, and account configurations, reducing repeat support requests.</li>
-                        <li>Managed service requests via ticketing system and documented common troubleshooting steps.</li>
-                        <li>Educated clients on IT best practices to prevent recurring issues.</li>
+                        <li>Built backend services and REST API integrations enabling customers to track IT support requests online.</li>
+                        <li>Developed booking systems and dashboards collaborating closely with frontend developers.</li>
+                        <li>Ensured reliability, performance, and cross-browser compatibility across features.</li>
                     </ul>
+                    <p class="experience-tech">JavaScript &middot; Node.js &middot; REST APIs &middot; HTML &middot; CSS</p>
                 </article>
-
                 <article class="experience-item">
-                    <h3>Junior Developer — VCG</h3>
-                    <p class="project-date">May 2021 – Dec 2021</p>
+                    <div class="exp-header">
+                        <div><h3>Junior Developer</h3><span class="exp-company">VCG &ndash; Vehicle Charge Grid</span></div>
+                        <p class="project-date">Jun 2023 &ndash; Jan 2024</p>
+                    </div>
                     <ul class="experience-list">
                         <li>Automated data collection from EV charging stations using Python and Pandas, reducing manual data entry by 40%.</li>
                         <li>Created scheduled scripts in Python and PowerShell to generate automated reports and move files between systems.</li>
                         <li>Developed data visualizations and dashboards to help management track station utilization and revenue trends.</li>
                     </ul>
+                    <p class="experience-tech">Python &middot; PowerShell &middot; Pandas &middot; Excel &middot; APIs &middot; Databases</p>
                 </article>
             </div>
         </section>
 
-        <!-- projects section -->
-        <section id="projects" class="section">
-            <h2>Projects</h2>
-            <div class="projects-container">
-                <!-- left column -->
-                <div class="project-column">
-                    <h3 class="column-title">Hardware & Embedded</h3>
-                    <article class="project-card">
-                        <h3>Arduino Temperature Monitor</h3>
-                        <p class="project-description">
-                            A temperature and humidity monitoring system using Arduino and DHT22 sensor.
-                            Displays readings on LCD screen and logs data to SD card.
-                        </p>
-                        <p class="project-tech"><strong>Tech:</strong> C++, Arduino, DHT22, LCD</p>
-                        <a href="https://github.com/yourusername/temp-monitor" class="project-link">GitHub →</a>
+        <section id="projects" class="page-section">
+            <h2 class="section-title">Project Archive</h2>
+            <div class="project-archive-shell">
+                <div class="project-tabs" role="tablist" aria-label="Project archive categories">
+                    <button class="project-tab-btn is-active" id="project-tab-web" type="button" role="tab" aria-selected="true" aria-controls="project-panel-web" data-panel="web">Web &amp; Product</button>
+                    <button class="project-tab-btn" id="project-tab-systems" type="button" role="tab" aria-selected="false" aria-controls="project-panel-systems" data-panel="systems">C++ &amp; Systems</button>
+                    <button class="project-tab-btn" id="project-tab-config" type="button" role="tab" aria-selected="false" aria-controls="project-panel-config" data-panel="config">Config &amp; Side Trails</button>
+                </div>
+
+                <section class="project-panel is-active" id="project-panel-web" role="tabpanel" aria-labelledby="project-tab-web">
+                    <div class="project-panel-header">
+                        <p class="project-panel-kicker">Web &amp; Product Work</p>
+                        <p class="project-panel-copy">This is the side where I make things people actually use. Some are more polished than others, but they all came from wanting a tool to exist.</p>
+                    </div>
+                    <div class="project-feature-grid">
+                        <article class="project-feature-card project-feature-card-wide">
+                            <div class="project-feature-topline">
+                                <span class="project-feature-kicker">Featured Build</span>
+                                <span class="project-feature-meta">JavaScript &middot; Node.js &middot; PostgreSQL &middot; React</span>
+                            </div>
+                            <h3>Linker</h3>
+                            <p class="project-feature-description">A link tool I built because I liked the idea of having shortening, analytics, QR codes, and link pages all in one place instead of spread across five services.</p>
+                            <div class="project-feature-tags">
+                                <span class="project-tag">product</span>
+                                <span class="project-tag">full-stack</span>
+                            </div>
+                            <a href="https://github.com/LwwDev/linker" class="project-link" target="_blank">View repository &rarr;</a>
+                        </article>
+                        <article class="project-feature-card">
+                            <div class="project-feature-topline">
+                                <span class="project-feature-kicker">Concept</span>
+                                <span class="project-feature-meta">TypeScript</span>
+                            </div>
+                            <h3>Networked</h3>
+                            <p class="project-feature-description">A social platform idea built around actual work and projects instead of polished profiles and vague personal branding.</p>
+                            <div class="project-feature-tags">
+                                <span class="project-tag">concept</span>
+                                <span class="project-tag">social</span>
+                            </div>
+                            <a href="https://github.com/LwwDev/networked" class="project-link" target="_blank">View repository &rarr;</a>
+                        </article>
+                        <article class="project-feature-card">
+                            <div class="project-feature-topline">
+                                <span class="project-feature-kicker">Daily Tools</span>
+                                <span class="project-feature-meta">JavaScript</span>
+                            </div>
+                            <h3>Habit</h3>
+                            <p class="project-feature-description">A habit tracker I made because most of them either do too much or feel annoying to use every day.</p>
+                            <div class="project-feature-tags">
+                                <span class="project-tag">web app</span>
+                                <span class="project-tag">productivity</span>
+                            </div>
+                            <a href="https://github.com/LwwDev/habit" class="project-link" target="_blank">View repository &rarr;</a>
+                        </article>
+                    </div>
+                    <div class="repo-list repo-list-spaced">
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>website-</h4>
+                                <p>An older version of this site. Simpler, rougher, and useful as a reminder that rebuilding your own website never really ends.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">HTML</span>
+                                <span class="repo-date">Updated Feb 2026</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>wordpress-plugin</h4>
+                                <p>A smaller UI-side experiment. More of a styling and integration repo than a big software project, but still part of the trail.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">CSS</span>
+                                <span class="repo-date">Updated Nov 2025</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>Lwwdev</h4>
+                                <p>Just my GitHub profile repo. Small thing, but I like having even the public-facing bits feel intentional.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">Profile</span>
+                                <span class="repo-date">Updated Apr 2026</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="project-panel" id="project-panel-systems" role="tabpanel" aria-labelledby="project-tab-systems" hidden>
+                    <div class="project-panel-header">
+                        <p class="project-panel-kicker">C++ &amp; Systems Trail</p>
+                        <p class="project-panel-copy">This is the more low-level side. A lot of it is me learning by building, breaking things, and doing it again until it makes sense.</p>
+                    </div>
+                    <div class="project-feature-grid">
+                        <article class="project-feature-card">
+                            <div class="project-feature-topline">
+                                <span class="project-feature-kicker">Systems</span>
+                                <span class="project-feature-meta">C++</span>
+                            </div>
+                            <h3>Enigma Machine CLI</h3>
+                            <p class="project-feature-description">An Enigma machine in the terminal. Mostly built because it sounded fun and I wanted to make the moving parts myself.</p>
+                            <div class="project-feature-tags">
+                                <span class="project-tag">cli</span>
+                                <span class="project-tag">history</span>
+                            </div>
+                            <a href="https://github.com/LwwDev/Enigma-machine-cli-tool" class="project-link" target="_blank">View repository &rarr;</a>
+                        </article>
+                        <article class="project-feature-card">
+                            <div class="project-feature-topline">
+                                <span class="project-feature-kicker">Parser</span>
+                                <span class="project-feature-meta">C++</span>
+                            </div>
+                            <h3>parsercpp</h3>
+                            <p class="project-feature-description">A parser-from-scratch project that taught me a lot by being awkward, fiddly, and worth finishing anyway.</p>
+                            <div class="project-feature-tags">
+                                <span class="project-tag">parsing</span>
+                                <span class="project-tag">from scratch</span>
+                            </div>
+                            <a href="https://github.com/LwwDev/parsercpp" class="project-link" target="_blank">View repository &rarr;</a>
+                        </article>
+                    </div>
+                    <div class="repo-list repo-list-spaced">
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>wordle-cli-cpp</h4>
+                                <p>A terminal Wordle clone. Straight-up practice project, but the kind that helps the language start to feel natural.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">C++</span>
+                                <span class="repo-date">Updated Jan 2026</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>inventory-managment</h4>
+                                <p>An inventory project from the phase where I was making a lot of small C++ programs just to get more reps in.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">C++</span>
+                                <span class="repo-date">Updated Dec 2025</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>PasswordGenerator / Passwordm</h4>
+                                <p>The same basic problem attacked in two different stacks. Not glamorous, but that kind of repetition is how stuff sticks.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">C++ / C#</span>
+                                <span class="repo-date">Updated Nov 2025</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>Kanban-board</h4>
+                                <p>An older C++ kanban board. A bit clunky now, but I still like it because you can see what I was trying to figure out.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">C++</span>
+                                <span class="repo-date">Updated Nov 2025</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="project-panel" id="project-panel-config" role="tabpanel" aria-labelledby="project-tab-config" hidden>
+                    <div class="project-panel-header">
+                        <p class="project-panel-kicker">Config, Hardware &amp; Side Trails</p>
+                        <p class="project-panel-copy">This is the tinkering pile. Keyboard stuff, config repos, and small side projects that make daily work feel more mine.</p>
+                    </div>
+                    <div class="project-feature-grid">
+                        <article class="project-feature-card project-feature-card-wide">
+                            <div class="project-feature-topline">
+                                <span class="project-feature-kicker">Keyboard / Firmware</span>
+                                <span class="project-feature-meta">ZMK</span>
+                            </div>
+                            <h3>lily58-wireless-zmk-config</h3>
+                            <p class="project-feature-description">My Lily58 config repo. This one is half workflow, half obsession.</p>
+                            <div class="project-feature-tags">
+                                <span class="project-tag">firmware</span>
+                                <span class="project-tag">keyboard</span>
+                            </div>
+                            <a href="https://github.com/LwwDev/lily58-wireless-zmk-config" class="project-link" target="_blank">View repository &rarr;</a>
+                        </article>
+                    </div>
+                    <div class="repo-list repo-list-spaced">
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>vscode-config</h4>
+                                <p>My VS Code setup. Nothing fancy, just the kind of repo that says a lot about how someone actually works every day.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">Config</span>
+                                <span class="repo-date">Updated Apr 2026</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>dotfiles</h4>
+                                <p>Shell and environment setup stuff. Quiet repo, but it affects everything else.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">Lua</span>
+                                <span class="repo-date">Updated Dec 2025</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>arduino-stuff</h4>
+                                <p>Small hardware-side experiments. A separate lane from the web stuff, which is exactly why I like keeping it around.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">C++</span>
+                                <span class="repo-date">Updated Nov 2025</span>
+                            </div>
+                        </article>
+                        <article class="repo-row">
+                            <div class="repo-copy">
+                                <h4>activem / pomodoro-timer-c- / quizgamecpp</h4>
+                                <p>A grab bag of smaller builds. Some were one-week sprints, some were just curiosity, but they all count.</p>
+                            </div>
+                            <div class="repo-meta">
+                                <span class="repo-pill">experiments</span>
+                                <span class="repo-date">2025 to 2026</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+                <div class="project-archive-footer">
+                    <a href="https://github.com/LwwDev?tab=repositories" class="project-link" target="_blank">Browse full GitHub archive &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="page-section">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content about-shell">
+                <div class="about-photos">
+                    <figure class="about-photo-item">
+                        <img src="pictures/me and my gf black and white.jpg" alt="Me and my girlfriend in Shanghai" class="about-photo">
+                        <figcaption class="about-photo-caption">Shanghai &mdash; 2024</figcaption>
+                    </figure>
+                    <figure class="about-photo-item">
+                        <img src="pictures/tenten and maki black and white.jpg" alt="Tenten and Lulu" class="about-photo">
+                        <figcaption class="about-photo-caption">Tenten &amp; Lulu</figcaption>
+                    </figure>
+                </div>
+                <p class="about-life-note">Outside work it is mostly time with my girlfriend, our cats, keyboards, and whatever side idea has grabbed me that week.</p>
+
+                <div class="about-overview-grid">
+                    <article class="about-overview-card about-overview-card-wide">
+                        <div class="about-card-topline">
+                            <span class="about-kicker">Snapshot</span>
+                            <span class="about-meta">systems + product + automation</span>
+                        </div>
+                        <h3>I like building useful things. Usually that means backend, systems, automation, or tools that save someone from doing the same boring task twice.</h3>
+                        <div class="about-overview-copy">
+                            <p>I tend to care more about software that actually helps than software that just sounds impressive. If something is messy, repetitive, or harder than it should be, I usually want to fix it.</p>
+                            <p>That is probably why I keep ending up around security software, internal tools, automation, and side projects where I can get close to both the logic underneath and the way it feels to use.</p>
+                        </div>
+                        <div class="about-chip-row">
+                            <span class="about-chip">security</span>
+                            <span class="about-chip">systems</span>
+                            <span class="about-chip">automation</span>
+                            <span class="about-chip">tooling</span>
+                            <span class="about-chip">web apps</span>
+                            <span class="about-chip">low-level curiosity</span>
+                        </div>
                     </article>
 
-                    <article class="project-card">
-                        <h3>LED Matrix Display</h3>
-                        <p class="project-description">
-                            Custom LED matrix controller with animations and text scrolling.
-                            Controlled via serial interface.
-                        </p>
-                        <p class="project-tech"><strong>Tech:</strong> C++, Arduino, MAX7219</p>
-                        <a href="https://github.com/yourusername/led-matrix" class="project-link">GitHub →</a>
+                    <article class="about-overview-card">
+                        <div class="about-card-topline">
+                            <span class="about-kicker">Current Focus</span>
+                            <span class="about-meta">right now</span>
+                        </div>
+                        <h3>What I am into right now</h3>
+                        <ul class="about-list">
+                            <li>Building digital forensics and security software at MSAB.</li>
+                            <li>Getting better at C++, C#, and the lower-level side of engineering.</li>
+                            <li>Making small tools and automations whenever work starts feeling repetitive.</li>
+                            <li>Keeping side projects messy enough to stay fun but solid enough to ship.</li>
+                        </ul>
                     </article>
                 </div>
 
-                <!-- right column -->
-                <div class="project-column">
-                    <h3 class="column-title">Software & Tools</h3>
-                    <article class="project-card">
-                        <h3>System Resource Monitor</h3>
-                        <p class="project-description">
-                            A lightweight CLI tool written in C++ that monitors CPU, memory, and disk usage.
-                            Displays real-time stats in the terminal.
-                        </p>
-                        <p class="project-tech"><strong>Tech:</strong> C++, Linux, /proc filesystem</p>
-                        <a href="https://github.com/yourusername/resource-monitor" class="project-link">GitHub →</a>
+                <div class="about-brief-grid">
+                    <article class="about-brief-card">
+                        <h3>How I Work</h3>
+                        <p>I usually work fast, then clean up after myself. Ship something, see what feels wrong, fix it, repeat. I care a lot about clarity and making things easier to work with.</p>
+                    </article>
+                    <article class="about-brief-card">
+                        <h3>What Pulls Me In</h3>
+                        <p>Backend work, systems stuff, security-adjacent tooling, CLI projects, and products that sit on top of something a little technical underneath.</p>
+                    </article>
+                    <article class="about-brief-card">
+                        <h3>Tinkering</h3>
+                        <p>Mechanical keyboards, Linux setups, config repos, and odd little tools that start as side quests and then somehow become part of my actual workflow.</p>
+                    </article>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="uses" class="page-section">
+            <h2 class="section-title">Toolbox / Uses</h2>
+            <div class="uses-shell">
+                <p class="uses-intro">This is the stuff I keep coming back to. Not because it looks good on a list, just because it is what I actually end up using.</p>
+
+                <div class="uses-grid">
+                    <article class="uses-card uses-card-wide">
+                        <div class="uses-card-topline">
+                            <span class="uses-kicker">Daily Stack</span>
+                            <span class="uses-meta">main build lane</span>
+                        </div>
+                        <h3>C++, C#, Python, and TypeScript</h3>
+                        <p>This is the mix I use most. Usually some backend or systems work, some automation, and sometimes a UI pass when I care enough to make it feel better.</p>
+                        <div class="uses-chip-row">
+                            <span class="uses-chip">C++</span>
+                            <span class="uses-chip">C#</span>
+                            <span class="uses-chip">Python</span>
+                            <span class="uses-chip">TypeScript</span>
+                            <span class="uses-chip">.NET</span>
+                            <span class="uses-chip">Node.js</span>
+                        </div>
                     </article>
 
-                    <article class="project-card">
-                        <h3>Automation Scripts</h3>
-                        <p class="project-description">
-                            Collection of Python scripts for automating repetitive tasks like file organization,
-                            batch renaming, and system backups.
-                        </p>
-                        <p class="project-tech"><strong>Tech:</strong> Python, bash, cron</p>
-                        <a href="https://github.com/yourusername/automation-scripts" class="project-link">GitHub →</a>
+                    <article class="uses-card">
+                        <div class="uses-card-topline">
+                            <span class="uses-kicker">Editor + Terminal</span>
+                            <span class="uses-meta">where I spend time</span>
+                        </div>
+                        <h3>VS Code, terminal-first checks, and GitHub</h3>
+                        <ul class="uses-list">
+                            <li>VS Code with my own config and not much extra clutter.</li>
+                            <li>I still end up in the terminal for builds, debugging, and random scripts.</li>
+                            <li>GitHub is where most of my side work lives, even the smaller rough projects.</li>
+                        </ul>
                     </article>
 
-                    <article class="project-card">
-                        <h3>Personal Portfolio Site</h3>
-                        <p class="project-description">
-                            This website! Built from scratch with TypeScript to learn web development
-                            and have a place to showcase my work.
-                        </p>
-                        <p class="project-tech"><strong>Tech:</strong> TypeScript, HTML, CSS</p>
-                        <a href="https://github.com/yourusername/portfolio" class="project-link">GitHub →</a>
+                    <article class="uses-card">
+                        <div class="uses-card-topline">
+                            <span class="uses-kicker">Systems + Infra</span>
+                            <span class="uses-meta">operating layer</span>
+                        </div>
+                        <h3>Linux, Windows, APIs, and platform plumbing</h3>
+                        <ul class="uses-list">
+                            <li>I move between Windows and Linux depending on what the job needs.</li>
+                            <li>APIs, identity stuff, and infra-adjacent problems keep showing up in my work.</li>
+                            <li>Docker usually comes in when I want things to stay predictable.</li>
+                        </ul>
+                    </article>
+
+                    <article class="uses-card">
+                        <div class="uses-card-topline">
+                            <span class="uses-kicker">Automation Lane</span>
+                            <span class="uses-meta">make the boring parts disappear</span>
+                        </div>
+                        <h3>Python, PowerShell, and n8n</h3>
+                        <ul class="uses-list">
+                            <li>Small scripts for cleanup, reporting, moving data, and killing repetitive work.</li>
+                            <li>If a process is annoying enough, I will probably try to automate it.</li>
+                            <li>I like tools that can be inspected, tweaked, and improved later.</li>
+                        </ul>
+                    </article>
+
+                    <article class="uses-card">
+                        <div class="uses-card-topline">
+                            <span class="uses-kicker">Workflow Setup</span>
+                            <span class="uses-meta">small polish matters</span>
+                        </div>
+                        <h3>Dotfiles, editor config, and setup polish</h3>
+                        <ul class="uses-list">
+                            <li>Dotfiles, shell tweaks, and small setup changes that make the machine feel calmer.</li>
+                            <li>A lot of this is just reducing friction a little at a time.</li>
+                            <li>I like having a setup I can understand and rebuild myself.</li>
+                        </ul>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- contact section -->
-        <section id="contact" class="section">
-            <h2>Contact</h2>
-            <div class="contact-content">
-                <p></p>
-                <div class="contact-info">
-                    <p><strong>Email:</strong> <span class="email-copy" data-email="Liam@wohlstedt.com">Liam@wohlstedt.com</span></p>
-                    <p><strong>GitHub:</strong> <a href="https://github.com/lwwdev" class="contact-link" target="_blank">github.com/lwwdev</a></p>
-                    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/liamww" class="contact-link" target="_blank">linkedin.com/in/liamww</a></p>
+        <section id="library" class="page-section">
+            <h2 class="section-title">What I've Read</h2>
+            <div class="library-shell">
+                <div class="library-grid">
+                    <article class="library-card">
+                        <div class="library-card-topline">
+                            <span class="library-kicker">Shelf 01</span>
+                            <span class="library-meta">self-development</span>
+                        </div>
+                        <ul class="library-list">
+                            <li class="library-row"><span class="library-book">Thinking in Bets</span><span class="library-author">Annie Duke</span></li>
+                            <li class="library-row"><span class="library-book">The Courage to Be Disliked</span><span class="library-author">Kishimi &amp; Koga</span></li>
+                            <li class="library-row"><span class="library-book">Antifragile</span><span class="library-author">Nassim Nicholas Taleb</span></li>
+                            <li class="library-row"><span class="library-book">The Almanack of Naval Ravikant</span><span class="library-author">Eric Jorgenson</span></li>
+                            <li class="library-row"><span class="library-book">Four Thousand Weeks</span><span class="library-author">Oliver Burkeman</span></li>
+                            <li class="library-row"><span class="library-book">Mastery</span><span class="library-author">Robert Greene</span></li>
+                        </ul>
+                    </article>
+
+                    <article class="library-card">
+                        <div class="library-card-topline">
+                            <span class="library-kicker">Shelf 02</span>
+                            <span class="library-meta">coding + systems</span>
+                        </div>
+                        <ul class="library-list">
+                            <li class="library-row"><span class="library-book">Clean Code</span><span class="library-author">Robert C. Martin</span></li>
+                            <li class="library-row"><span class="library-book">The Pragmatic Programmer</span><span class="library-author">Andrew Hunt &amp; David Thomas</span></li>
+                            <li class="library-row"><span class="library-book">Designing Data-Intensive Applications</span><span class="library-author">Martin Kleppmann</span></li>
+                            <li class="library-row"><span class="library-book">Code Complete</span><span class="library-author">Steve McConnell</span></li>
+                            <li class="library-row"><span class="library-book">Refactoring</span><span class="library-author">Martin Fowler</span></li>
+                            <li class="library-row"><span class="library-book">The C++ Programming Language</span><span class="library-author">Bjarne Stroustrup</span></li>
+                        </ul>
+                    </article>
+
+                    <article class="library-card">
+                        <div class="library-card-topline">
+                            <span class="library-kicker">Shelf 03</span>
+                            <span class="library-meta">philosophy</span>
+                        </div>
+                        <ul class="library-list">
+                            <li class="library-row"><span class="library-book">Meditations</span><span class="library-author">Marcus Aurelius</span></li>
+                            <li class="library-row"><span class="library-book">Letters from a Stoic</span><span class="library-author">Seneca</span></li>
+                            <li class="library-row"><span class="library-book">Beyond Good and Evil</span><span class="library-author">Friedrich Nietzsche</span></li>
+                            <li class="library-row"><span class="library-book">The Republic</span><span class="library-author">Plato</span></li>
+                            <li class="library-row"><span class="library-book">The Stranger</span><span class="library-author">Albert Camus</span></li>
+                            <li class="library-row"><span class="library-book">Man&apos;s Search for Meaning</span><span class="library-author">Viktor E. Frankl</span></li>
+                        </ul>
+                    </article>
                 </div>
             </div>
         </section>
+
+        <section id="travel" class="page-section">
+            <h2 class="section-title">Travel Map</h2>
+            <div class="travel-shell">
+                <article class="travel-map-card">
+                    <div class="travel-card-topline">
+                        <span class="travel-kicker">Visited Places</span>
+                        <span class="travel-meta">monochrome map</span>
+                    </div>
+                    <div id="travel-map" class="travel-map" role="img" aria-label="World map with visited countries highlighted in white"></div>
+                    <div class="travel-map-footer">
+                        <div class="travel-legend">
+                            <span class="travel-legend-item"><span class="travel-swatch travel-swatch-visited"></span>visited</span>
+                            <span class="travel-legend-item"><span class="travel-swatch travel-swatch-default"></span>not yet</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="keyboards" class="page-section">
+            <h2 class="section-title">Keyboards</h2>
+            <div class="keyboard-shell">
+                <div class="keyboard-hero">
+                    <article class="keyboard-photo-card">
+                        <div class="keyboard-photo-frame">
+                            <img src="pictures/keyboard.jpg" alt="My split mechanical keyboard setup" class="keyboard-showcase-image">
+                        </div>
+                        <p class="keyboard-photo-caption">Mechanical keyboards ended up becoming one of those side interests that keeps blending into the rest of my workflow. Layout, feel, sound, and firmware all start to matter when it is something you use every day.</p>
+                        <ul class="keyboard-spec-list">
+                            <li>Keychron Q11 Split ISO</li>
+                            <li>Pink Kailh silent switches</li>
+                            <li>Full black keycaps</li>
+                            <li>Tape mod under the PCB for that thocky sound</li>
+                        </ul>
+                    </article>
+
+                    <article class="keyboard-feature-card">
+                        <div class="keyboard-card-topline">
+                            <span class="keyboard-kicker">Why It Sticks</span>
+                            <span class="keyboard-meta">hardware + firmware</span>
+                        </div>
+                        <h3>I like keyboards for the same reason I like good software tools: they reward iteration, attention to detail, and a setup that feels personal instead of default.</h3>
+                        <p>Split layouts, keymap changes, switch feel, sound tuning, and firmware tweaks all hit the same part of my brain as software customization. It is a mix of ergonomics, aesthetics, and small engineering decisions that add up over time.</p>
+                        <p>That is part of why boards like the Keychron Q11 and Lily58-style setups stand out to me. They feel like the point where hardware, workflow, and tinkering start overlapping in a really fun way.</p>
+                        <div class="keyboard-tag-row">
+                            <span class="keyboard-tag">split layouts</span>
+                            <span class="keyboard-tag">zmk</span>
+                            <span class="keyboard-tag">keymaps</span>
+                            <span class="keyboard-tag">sound tuning</span>
+                            <span class="keyboard-tag">desk setup</span>
+                        </div>
+                        <a href="https://github.com/LwwDev/lily58-wireless-zmk-config" class="project-link" target="_blank">View Lily58 config repo &rarr;</a>
+                    </article>
+                </div>
+
+                <div class="keyboard-notes-grid">
+                    <article class="keyboard-note-card">
+                        <h3>Boards + Feel</h3>
+                        <p>I tend to like split boards, darker caps, and layouts that feel a little more deliberate than stock keyboards. I care about comfort, but I also just like when a board feels intentional.</p>
+                    </article>
+                    <article class="keyboard-note-card">
+                        <h3>Firmware + Layers</h3>
+                        <p>Custom keymaps are a big part of the fun. Tweaking layers, movement keys, shortcuts, and the little navigation details turns the board into part of the workflow rather than just a device.</p>
+                    </article>
+                    <article class="keyboard-note-card">
+                        <h3>Why It Fits</h3>
+                        <p>Keyboard tinkering scratches the same itch as software: change a detail, test it, keep what feels better, and slowly build a setup that reflects how you actually work.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- board section -->
+        <section id="board" class="page-section">
+            <h2 class="section-title">Kanban Board</h2>
+            <div class="kanban-toolbar">
+                <input id="kanban-search" class="kanban-search" type="search" placeholder="Search issues, labels, or assignee" aria-label="Search issues">
+                <div class="kanban-filter-group" role="tablist" aria-label="Issue filters">
+                    <button class="kanban-filter-btn is-active" data-filter="all" type="button">All</button>
+                    <button class="kanban-filter-btn" data-filter="story" type="button">Stories</button>
+                    <button class="kanban-filter-btn" data-filter="task" type="button">Tasks</button>
+                    <button class="kanban-filter-btn" data-filter="bug" type="button">Bugs</button>
+                </div>
+                <p class="kanban-toolbar-meta" id="kanban-toolbar-meta">0 visible issues</p>
+            </div>
+            <div class="kanban-board">
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-copy">
+                            <span class="kanban-col-title">backlog</span>
+                        </div>
+                        <span class="kanban-count" id="kcount-backlog">0</span>
+                    </div>
+                    <div class="kanban-cards-inner" id="kcards-backlog" data-col="backlog"></div>
+                    <button class="kanban-add-btn" data-col="backlog" type="button">+ create issue</button>
+                </div>
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-copy">
+                            <span class="kanban-col-title">up next</span>
+                        </div>
+                        <span class="kanban-count" id="kcount-selected">0</span>
+                    </div>
+                    <div class="kanban-cards-inner" id="kcards-selected" data-col="selected"></div>
+                    <button class="kanban-add-btn" data-col="selected" type="button">+ create issue</button>
+                </div>
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-copy">
+                            <span class="kanban-col-title">in progress</span>
+                        </div>
+                        <span class="kanban-count" id="kcount-inprogress">0</span>
+                    </div>
+                    <div class="kanban-cards-inner" id="kcards-inprogress" data-col="inprogress"></div>
+                    <button class="kanban-add-btn" data-col="inprogress" type="button">+ create issue</button>
+                </div>
+                <div class="kanban-col">
+                    <div class="kanban-col-header">
+                        <div class="kanban-col-copy">
+                            <span class="kanban-col-title">done</span>
+                        </div>
+                        <span class="kanban-count" id="kcount-done">0</span>
+                    </div>
+                    <div class="kanban-cards-inner" id="kcards-done" data-col="done"></div>
+                    <button class="kanban-add-btn" data-col="done" type="button">+ create issue</button>
+                </div>
+            </div>
+            <button class="kanban-reset-btn" id="kanban-reset" type="button">reset board</button>
+            <dialog id="kanban-dialog" class="kanban-dialog">
+                <form method="dialog" class="kanban-dialog-shell" id="kanban-form">
+                    <div class="kanban-dialog-header">
+                        <div>
+                            <p class="kanban-dialog-kicker" id="kanban-dialog-mode">Create issue</p>
+                            <h3 class="kanban-dialog-title" id="kanban-dialog-title">New issue</h3>
+                        </div>
+                        <button class="kanban-dialog-close" id="kanban-dialog-close" type="button" aria-label="Close issue dialog">close</button>
+                    </div>
+                    <div class="kanban-form-grid">
+                        <label class="kanban-field kanban-field-full">
+                            <span>Summary</span>
+                            <input id="kanban-summary-input" name="summary" type="text" maxlength="120" placeholder="What needs to happen?" required>
+                        </label>
+                        <label class="kanban-field kanban-field-full">
+                            <span>Description</span>
+                            <textarea id="kanban-description-input" name="description" rows="4" placeholder="Add a few details about the issue"></textarea>
+                        </label>
+                        <label class="kanban-field">
+                            <span>Type</span>
+                            <select id="kanban-type-input" name="type">
+                                <option value="story">Story</option>
+                                <option value="task">Task</option>
+                                <option value="bug">Bug</option>
+                            </select>
+                        </label>
+                        <label class="kanban-field">
+                            <span>Priority</span>
+                            <select id="kanban-priority-input" name="priority">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="highest">Highest</option>
+                            </select>
+                        </label>
+                        <label class="kanban-field">
+                            <span>Status</span>
+                            <select id="kanban-status-input" name="status">
+                                <option value="backlog">Backlog</option>
+                                <option value="selected">Up Next</option>
+                                <option value="inprogress">In Progress</option>
+                                <option value="done">Done</option>
+                            </select>
+                        </label>
+                        <label class="kanban-field">
+                            <span>Assignee</span>
+                            <input id="kanban-assignee-input" name="assignee" type="text" maxlength="32" placeholder="Liam">
+                        </label>
+                        <label class="kanban-field kanban-field-full">
+                            <span>Labels</span>
+                            <input id="kanban-labels-input" name="labels" type="text" placeholder="portfolio, ui, polish">
+                        </label>
+                    </div>
+                    <div class="kanban-dialog-actions">
+                        <button class="kanban-danger-btn" id="kanban-delete-btn" type="button">Delete issue</button>
+                        <button class="kanban-secondary-btn" id="kanban-cancel-btn" type="button">Cancel</button>
+                        <button class="kanban-primary-btn" id="kanban-save-btn" type="submit">Save issue</button>
+                    </div>
+                </form>
+            </dialog>
+        </section>
+
+        <section id="notes" class="page-section">
+            <h2 class="section-title">Notes</h2>
+            <div class="notes-shell">
+                <p class="notes-desc">Just scraps, opinions, and things I wanted to remember. <span class="notes-hint">Click any note to edit.</span></p>
+                <div class="notes-list" id="notes-list"></div>
+            </div>
+        </section>
+
+        <dialog id="note-dialog" class="note-dialog">
+            <div class="note-dialog-shell">
+                <div class="note-dialog-header">
+                    <div class="note-dialog-meta">
+                        <span id="note-dialog-date" class="note-date"></span>
+                        <span id="note-dialog-tag" class="note-tag"></span>
+                    </div>
+                    <button id="note-dialog-done" class="note-dialog-done-btn" type="button">done</button>
+                </div>
+                <textarea id="note-dialog-body" class="note-dialog-textarea" spellcheck="false"></textarea>
+            </div>
+        </dialog>
+
+        <section id="game" class="page-section">
+            <h2 class="section-title">Game</h2>
+            <div class="game-shell">
+                <div class="game-card">
+                    <div class="game-card-header">
+                        <span class="game-kicker">snake.exe</span>
+                        <div class="game-scores">
+                            <span class="game-score-item">score <strong id="snake-score">0</strong></span>
+                            <span class="game-score-item">best <strong id="snake-best">0</strong></span>
+                        </div>
+                    </div>
+                    <div class="game-canvas-wrap">
+                        <canvas id="snake-canvas"></canvas>
+                    </div>
+                    <div class="game-footer">
+                        <button id="snake-start" class="game-btn" type="button">start</button>
+                        <span id="snake-status" class="game-status"></span>
+                        <span class="game-hint">arrow keys or WASD to move</span>
+                    </div>
+                </div>
+
+                <div class="top10-card">
+                    <div class="top10-header">
+                        <span class="game-kicker">top 7 &mdash; all time</span>
+                    </div>
+                    <ol class="top10-list">
+                        <li class="top10-entry">
+                            <span class="top10-rank">01</span>
+                            <div class="top10-info">
+                                <span class="top10-title">The Witcher 3: Wild Hunt</span>
+                                <span class="top10-meta">RPG &middot; 2015</span>
+                            </div>
+                        </li>
+                        <li class="top10-entry">
+                            <span class="top10-rank">02</span>
+                            <div class="top10-info">
+                                <span class="top10-title">Red Dead Redemption 2</span>
+                                <span class="top10-meta">Action &middot; 2018</span>
+                            </div>
+                        </li>
+                        <li class="top10-entry">
+                            <span class="top10-rank">03</span>
+                            <div class="top10-info">
+                                <span class="top10-title">Dark Souls</span>
+                                <span class="top10-meta">Action RPG &middot; 2011</span>
+                            </div>
+                        </li>
+                        <li class="top10-entry">
+                            <span class="top10-rank">04</span>
+                            <div class="top10-info">
+                                <span class="top10-title">Half-Life 2</span>
+                                <span class="top10-meta">FPS &middot; 2004</span>
+                            </div>
+                        </li>
+                        <li class="top10-entry">
+                            <span class="top10-rank">05</span>
+                            <div class="top10-info">
+                                <span class="top10-title">Minecraft</span>
+                                <span class="top10-meta">Sandbox &middot; 2011</span>
+                            </div>
+                        </li>
+                        <li class="top10-entry">
+                            <span class="top10-rank">06</span>
+                            <div class="top10-info">
+                                <span class="top10-title">Portal 2</span>
+                                <span class="top10-meta">Puzzle &middot; 2011</span>
+                            </div>
+                        </li>
+                        <li class="top10-entry">
+                            <span class="top10-rank">07</span>
+                            <div class="top10-info">
+                                <span class="top10-title">Hades</span>
+                                <span class="top10-meta">Roguelike &middot; 2020</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <div class="page-end-actions">
+            <a href="#top" class="back-to-top">Back to top &uarr;</a>
+        </div>
+
     </main>
 
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
     <script src="dist/app.js"></script>
 </body>
 </html>
