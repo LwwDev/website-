@@ -3613,6 +3613,21 @@ h3 {
     .private-kanban-page .kanban-board {
         grid-template-columns: 1fr;
     }
+
+    .private-kanban-header-meta {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .private-kanban-home-link {
+        margin-left: 0;
+    }
+
+    .private-kanban-page .private-archive-col {
+        grid-column: auto;
+    }
 }
 
 @media (max-width: 640px) {
@@ -3623,11 +3638,141 @@ h3 {
 
     .private-kanban-header,
     .private-kanban-card,
-    .private-board-topbar {
+    .private-board-topbar,
+    .private-board-workspace,
+    .private-kanban-page .kanban-col,
+    .private-kanban-page .kanban-dialog-shell {
         border-radius: 20px;
+    }
+
+    .private-kanban-header {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .private-kanban-header h1 {
+        font-size: clamp(2.2rem, 10vw, 3rem);
+    }
+
+    .private-kanban-header-meta {
+        width: 100%;
+        align-items: stretch;
+        gap: 0.55rem;
+    }
+
+    .private-kanban-badge,
+    .private-board-sync,
+    .private-theme-toggle,
+    .private-board-logout,
+    .private-kanban-home-link {
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .private-kanban-home-link {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--g1);
     }
 
     .private-kanban-card {
         padding: 1.3rem;
+    }
+
+    .private-kanban-card h2 {
+        font-size: clamp(1.7rem, 8vw, 2.35rem);
+    }
+
+    .private-login-submit,
+    .private-login-field input {
+        min-height: 48px;
+    }
+
+    .private-board-workspace {
+        padding: 0.7rem;
+    }
+
+    .private-kanban-page .kanban-board {
+        gap: 0.8rem;
+    }
+
+    .private-kanban-page .kanban-col {
+        padding: 0.75rem;
+    }
+
+    .private-kanban-page .kanban-col-header {
+        margin-bottom: 0.7rem;
+    }
+
+    .private-kanban-page .kanban-count {
+        min-width: 2.1rem;
+    }
+
+    .private-kanban-page .kanban-ticket {
+        padding: 0.85rem;
+        gap: 0.55rem;
+        border-radius: 14px;
+    }
+
+    .private-kanban-page .kanban-ticket-summary {
+        font-size: 0.86rem;
+    }
+
+    .private-kanban-page .kanban-ticket-description {
+        font-size: 0.68rem;
+        -webkit-line-clamp: 4;
+    }
+
+    .private-kanban-page .kanban-add-btn {
+        min-height: 44px;
+        padding: 0.8rem 0.9rem;
+    }
+
+    .private-kanban-page .kanban-dialog {
+        width: min(100vw - 0.8rem, 100vw);
+    }
+
+    .private-kanban-page .kanban-dialog-shell {
+        padding: 1rem;
+    }
+
+    .private-kanban-page .kanban-dialog-header {
+        margin-bottom: 1rem;
+    }
+
+    .private-kanban-page .kanban-form-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .private-kanban-page .kanban-field input,
+    .private-kanban-page .kanban-field select,
+    .private-kanban-page .kanban-field textarea {
+        min-height: 46px;
+        font-size: 0.8rem;
+    }
+
+    .private-kanban-page .kanban-field textarea {
+        min-height: 120px;
+    }
+
+    .private-kanban-page .kanban-dialog-actions {
+        gap: 0.6rem;
+    }
+
+    .private-kanban-page .kanban-primary-btn,
+    .private-kanban-page .kanban-secondary-btn,
+    .private-kanban-page .kanban-danger-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .private-kanban-page .kanban-danger-btn {
+        margin-right: 0;
+        order: 3;
     }
 }
