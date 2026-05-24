@@ -4,9 +4,10 @@ var PrivateKanbanPage;
     const SUPABASE_URL = 'https://tcgpjwzviqdhbtjsohlq.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_2lsTFLaVGNdUXczWZ_Mw0w_5UCF9KHZ';
     const KANBAN_TABLE = 'kanban_boards';
-    const kanbanColumnIds = ['backlog', 'selected', 'inprogress', 'done'];
+    const PRIVATE_THEME_KEY = 'private-kanban-theme';
+    const kanbanColumnIds = ['todo', 'inprogress', 'done', 'archive'];
     const kanbanIssueTypes = ['story', 'task', 'bug'];
-    const kanbanPriorities = ['low', 'medium', 'high', 'highest'];
+    const kanbanPriorities = ['', 'low', 'medium', 'high', 'highest'];
     function isKanbanColumnId(value) {
         return kanbanColumnIds.includes(value);
     }
@@ -26,9 +27,8 @@ var PrivateKanbanPage;
                 description: 'Keep the public board open on the main site and route the real board through /kanban.',
                 type: 'story',
                 priority: 'highest',
-                assignee: 'Liam',
                 labels: ['supabase', 'auth'],
-                column: 'selected',
+                column: 'todo',
                 updatedAt: now - 1000 * 60 * 35,
             },
             {
@@ -38,7 +38,6 @@ var PrivateKanbanPage;
                 description: 'Make /kanban feel intentional instead of like a leftover admin screen.',
                 type: 'task',
                 priority: 'high',
-                assignee: 'Liam',
                 labels: ['routing', 'vercel'],
                 column: 'inprogress',
                 updatedAt: now - 1000 * 60 * 18,
@@ -46,13 +45,12 @@ var PrivateKanbanPage;
             {
                 id: 'private-issue-103',
                 key: 'LW-103',
-                summary: 'Keep the homepage board as a public demo',
-                description: 'The public board should stay playful and visible without any login friction.',
+                summary: 'Idea: throw rough notes into an archive lane first',
+                description: 'Keep messy thoughts somewhere visible without making the main board feel cluttered.',
                 type: 'story',
-                priority: 'medium',
-                assignee: 'Liam',
-                labels: ['public', 'demo'],
-                column: 'backlog',
+                priority: '',
+                labels: ['workflow', 'ideas'],
+                column: 'archive',
                 updatedAt: now - 1000 * 60 * 65,
             },
             {
@@ -61,10 +59,9 @@ var PrivateKanbanPage;
                 summary: 'Capture smaller personal tasks privately',
                 description: 'Use the private board for the messier real-life and work-in-progress stuff.',
                 type: 'task',
-                priority: 'medium',
-                assignee: 'Liam',
+                priority: '',
                 labels: ['personal'],
-                column: 'backlog',
+                column: 'todo',
                 updatedAt: now - 1000 * 60 * 80,
             },
             {
@@ -74,7 +71,6 @@ var PrivateKanbanPage;
                 description: 'Make the gate feel understated and consistent with the rest of the site.',
                 type: 'task',
                 priority: 'low',
-                assignee: 'Liam',
                 labels: ['ui'],
                 column: 'done',
                 updatedAt: now - 1000 * 60 * 180,
@@ -83,10 +79,10 @@ var PrivateKanbanPage;
         return {
             issues,
             order: {
-                backlog: ['private-issue-103', 'private-issue-104'],
-                selected: ['private-issue-101'],
+                todo: ['private-issue-101', 'private-issue-104'],
                 inprogress: ['private-issue-102'],
                 done: ['private-issue-105'],
+                archive: ['private-issue-103'],
             },
             nextNumber: 106,
         };
@@ -110,7 +106,6 @@ var PrivateKanbanPage;
                 typeof candidateIssue.key === 'string' &&
                 typeof candidateIssue.summary === 'string' &&
                 typeof candidateIssue.description === 'string' &&
-                typeof candidateIssue.assignee === 'string' &&
                 Array.isArray(candidateIssue.labels) &&
                 typeof candidateIssue.column === 'string' &&
                 isKanbanColumnId(candidateIssue.column) &&
@@ -121,6 +116,7 @@ var PrivateKanbanPage;
         })
             .map(issue => ({
             ...issue,
+            assignee: typeof issue.assignee === 'string' ? issue.assignee : '',
             labels: issue.labels.filter((label) => typeof label === 'string'),
             updatedAt: typeof issue.updatedAt === 'number' ? issue.updatedAt : Date.now(),
         }));
@@ -128,10 +124,10 @@ var PrivateKanbanPage;
             return fallback;
         const knownIds = new Set(issues.map(issue => issue.id));
         const sanitizedOrder = {
-            backlog: [],
-            selected: [],
+            todo: [],
             inprogress: [],
             done: [],
+            archive: [],
         };
         if (parsed.order && typeof parsed.order === 'object') {
             kanbanColumnIds.forEach(columnId => {
@@ -175,10 +171,49 @@ var PrivateKanbanPage;
         if (element)
             element.classList.toggle('hidden', hidden);
     }
+    function setupThemeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById('private-theme-toggle');
+        if (!(body instanceof HTMLBodyElement) || !(toggle instanceof HTMLButtonElement)) {
+            return;
+        }
+        const toggleEl = toggle;
+        function applyTheme(theme) {
+            const isDay = theme === 'day';
+            body.classList.toggle('private-kanban-day', isDay);
+            toggleEl.textContent = isDay ? 'Night' : 'Day';
+            toggleEl.setAttribute('aria-pressed', isDay ? 'true' : 'false');
+        }
+        let savedTheme = 'night';
+        try {
+            const raw = window.localStorage.getItem(PRIVATE_THEME_KEY);
+            if (raw === 'day' || raw === 'night') {
+                savedTheme = raw;
+            }
+        }
+        catch {
+            savedTheme = 'night';
+        }
+        applyTheme(savedTheme);
+        toggleEl.addEventListener('click', () => {
+            const nextTheme = body.classList.contains('private-kanban-day') ? 'night' : 'day';
+            applyTheme(nextTheme);
+            try {
+                window.localStorage.setItem(PRIVATE_THEME_KEY, nextTheme);
+            }
+            catch {
+                // ignore theme persistence failures
+            }
+        });
+    }
+    function describeError(error) {
+        if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
+            return error.message;
+        }
+        return 'Unknown error';
+    }
     function createPrivateBoard(client, userId) {
         const board = document.querySelector('.kanban-board');
-        const searchInput = document.getElementById('kanban-search');
-        const toolbarMeta = document.getElementById('kanban-toolbar-meta');
         const resetButton = document.getElementById('kanban-reset');
         const dialog = document.getElementById('kanban-dialog');
         const form = document.getElementById('kanban-form');
@@ -190,26 +225,20 @@ var PrivateKanbanPage;
         const saveButton = document.getElementById('kanban-save-btn');
         const summaryInput = document.getElementById('kanban-summary-input');
         const descriptionInput = document.getElementById('kanban-description-input');
-        const typeInput = document.getElementById('kanban-type-input');
         const priorityInput = document.getElementById('kanban-priority-input');
         const statusInput = document.getElementById('kanban-status-input');
-        const assigneeInput = document.getElementById('kanban-assignee-input');
         const labelsInput = document.getElementById('kanban-labels-input');
-        const filterButtons = Array.from(document.querySelectorAll('.kanban-filter-btn'));
         const addButtons = Array.from(document.querySelectorAll('.kanban-add-btn'));
         const syncStatus = document.getElementById('private-sync-status');
-        const backlogContainer = document.getElementById('kcards-backlog');
-        const selectedContainer = document.getElementById('kcards-selected');
+        const todoContainer = document.getElementById('kcards-todo');
         const inprogressContainer = document.getElementById('kcards-inprogress');
         const doneContainer = document.getElementById('kcards-done');
-        const backlogCount = document.getElementById('kcount-backlog');
-        const selectedCount = document.getElementById('kcount-selected');
+        const archiveContainer = document.getElementById('kcards-archive');
+        const todoCount = document.getElementById('kcount-todo');
         const inprogressCount = document.getElementById('kcount-inprogress');
         const doneCount = document.getElementById('kcount-done');
+        const archiveCount = document.getElementById('kcount-archive');
         if (!(board instanceof HTMLElement) ||
-            !(searchInput instanceof HTMLInputElement) ||
-            !(toolbarMeta instanceof HTMLElement) ||
-            !(resetButton instanceof HTMLButtonElement) ||
             !(dialog instanceof HTMLDialogElement) ||
             !(form instanceof HTMLFormElement) ||
             !(dialogMode instanceof HTMLElement) ||
@@ -220,24 +249,20 @@ var PrivateKanbanPage;
             !(saveButton instanceof HTMLButtonElement) ||
             !(summaryInput instanceof HTMLInputElement) ||
             !(descriptionInput instanceof HTMLTextAreaElement) ||
-            !(typeInput instanceof HTMLSelectElement) ||
             !(priorityInput instanceof HTMLSelectElement) ||
             !(statusInput instanceof HTMLSelectElement) ||
-            !(assigneeInput instanceof HTMLInputElement) ||
             !(labelsInput instanceof HTMLInputElement) ||
-            !(backlogContainer instanceof HTMLElement) ||
-            !(selectedContainer instanceof HTMLElement) ||
+            !(todoContainer instanceof HTMLElement) ||
             !(inprogressContainer instanceof HTMLElement) ||
             !(doneContainer instanceof HTMLElement) ||
-            !(backlogCount instanceof HTMLElement) ||
-            !(selectedCount instanceof HTMLElement) ||
+            !(archiveContainer instanceof HTMLElement) ||
+            !(todoCount instanceof HTMLElement) ||
             !(inprogressCount instanceof HTMLElement) ||
-            !(doneCount instanceof HTMLElement)) {
+            !(doneCount instanceof HTMLElement) ||
+            !(archiveCount instanceof HTMLElement)) {
             return null;
         }
-        const searchInputEl = searchInput;
-        const toolbarMetaEl = toolbarMeta;
-        const resetButtonEl = resetButton;
+        const resetButtonEl = resetButton instanceof HTMLButtonElement ? resetButton : null;
         const dialogEl = dialog;
         const formEl = form;
         const dialogModeEl = dialogMode;
@@ -248,77 +273,75 @@ var PrivateKanbanPage;
         const saveButtonEl = saveButton;
         const summaryInputEl = summaryInput;
         const descriptionInputEl = descriptionInput;
-        const typeInputEl = typeInput;
         const priorityInputEl = priorityInput;
         const statusInputEl = statusInput;
-        const assigneeInputEl = assigneeInput;
         const labelsInputEl = labelsInput;
         const columnContainers = {
-            backlog: backlogContainer,
-            selected: selectedContainer,
+            todo: todoContainer,
             inprogress: inprogressContainer,
             done: doneContainer,
+            archive: archiveContainer,
         };
         const countElements = {
-            backlog: backlogCount,
-            selected: selectedCount,
+            todo: todoCount,
             inprogress: inprogressCount,
             done: doneCount,
+            archive: archiveCount,
         };
         const columnElements = {
-            backlog: backlogContainer.closest('.kanban-col'),
-            selected: selectedContainer.closest('.kanban-col'),
+            todo: todoContainer.closest('.kanban-col'),
             inprogress: inprogressContainer.closest('.kanban-col'),
             done: doneContainer.closest('.kanban-col'),
+            archive: archiveContainer.closest('.kanban-col'),
         };
         let state = createDefaultKanbanState();
-        let activeFilter = 'all';
-        let searchTerm = '';
         let draggedIssueId = null;
         let editingIssueId = null;
         let saveInFlight = false;
         let pendingSave = false;
+        let historyStack = [];
+        function trimHistoryStack() {
+            if (historyStack.length > 30) {
+                historyStack = historyStack.slice(-30);
+            }
+        }
+        function pushHistorySnapshot() {
+            historyStack.push(cloneState(state));
+            trimHistoryStack();
+        }
+        function undoLastChange() {
+            const previousState = historyStack.pop();
+            if (!previousState) {
+                updateSyncStatus('Nothing to undo');
+                return;
+            }
+            state = sanitizeBoardState(previousState);
+            renderKanban();
+            requestSave();
+            updateSyncStatus('Undoing…');
+        }
+        function shouldIgnoreUndoShortcut(target) {
+            if (!(target instanceof HTMLElement))
+                return false;
+            return target instanceof HTMLInputElement ||
+                target instanceof HTMLTextAreaElement ||
+                target instanceof HTMLSelectElement ||
+                target.isContentEditable;
+        }
         function getIssue(issueId) {
             return state.issues.find(issue => issue.id === issueId);
         }
-        function getAssigneeInitials(name) {
-            const initials = name
-                .split(/\s+/)
-                .filter(Boolean)
-                .slice(0, 2)
-                .map(part => part[0]?.toUpperCase() ?? '')
-                .join('');
-            return initials || 'LW';
-        }
-        function issueMatchesFilters(issue) {
-            if (activeFilter !== 'all' && issue.type !== activeFilter)
-                return false;
-            if (!searchTerm)
-                return true;
-            const haystack = [
-                issue.key,
-                issue.summary,
-                issue.description,
-                issue.assignee,
-                issue.labels.join(' '),
-            ].join(' ').toLowerCase();
-            return haystack.includes(searchTerm);
-        }
         function priorityLabel(priority) {
-            return priority === 'highest' ? 'highest'
-                : priority === 'high' ? 'high'
-                    : priority === 'medium' ? 'medium'
-                        : 'low';
-        }
-        function titleCase(value) {
-            return value.charAt(0).toUpperCase() + value.slice(1);
+            return priority === '' ? ''
+                : priority === 'highest' ? 'highest'
+                    : priority === 'high' ? 'high'
+                        : priority === 'medium' ? 'medium'
+                            : 'low';
         }
         function createEmptyState() {
             const empty = document.createElement('div');
             empty.className = 'kanban-empty';
-            empty.textContent = searchTerm || activeFilter !== 'all'
-                ? 'No issues match the current filters.'
-                : 'No issues here yet.';
+            empty.textContent = 'No issues here yet.';
             return empty;
         }
         function updateSyncStatus(message) {
@@ -342,7 +365,8 @@ var PrivateKanbanPage;
                     updated_at: new Date().toISOString(),
                 }, { onConflict: 'user_id' });
                 if (error) {
-                    updateSyncStatus('Save failed');
+                    console.error('Private kanban save failed:', error);
+                    updateSyncStatus(`Save failed: ${describeError(error)}`);
                     saveInFlight = false;
                     return;
                 }
@@ -371,10 +395,8 @@ var PrivateKanbanPage;
             deleteButtonEl.hidden = true;
             summaryInputEl.value = '';
             descriptionInputEl.value = '';
-            typeInputEl.value = 'task';
-            priorityInputEl.value = 'medium';
+            priorityInputEl.value = '';
             statusInputEl.value = columnId;
-            assigneeInputEl.value = 'Liam';
             labelsInputEl.value = '';
             openDialog();
             summaryInputEl.focus();
@@ -390,10 +412,8 @@ var PrivateKanbanPage;
             deleteButtonEl.hidden = false;
             summaryInputEl.value = issue.summary;
             descriptionInputEl.value = issue.description;
-            typeInputEl.value = issue.type;
             priorityInputEl.value = issue.priority;
             statusInputEl.value = issue.column;
-            assigneeInputEl.value = issue.assignee;
             labelsInputEl.value = issue.labels.join(', ');
             openDialog();
             summaryInputEl.focus();
@@ -404,10 +424,23 @@ var PrivateKanbanPage;
                 state.order[columnId] = state.order[columnId].filter(id => id !== issueId);
             });
         }
-        function moveIssue(issueId, targetColumn, beforeIssueId) {
+        function moveIssue(issueId, targetColumn, beforeIssueId, recordHistory = true) {
             const issue = getIssue(issueId);
             if (!issue)
                 return;
+            const currentOrder = state.order[issue.column];
+            const currentIndex = currentOrder.indexOf(issueId);
+            const targetOrderBeforeMove = state.order[targetColumn];
+            const rawTargetIndex = beforeIssueId ? targetOrderBeforeMove.indexOf(beforeIssueId) : targetOrderBeforeMove.length;
+            const normalizedTargetIndex = issue.column === targetColumn && rawTargetIndex > currentIndex
+                ? rawTargetIndex - 1
+                : rawTargetIndex;
+            if (issue.column === targetColumn && currentIndex === normalizedTargetIndex) {
+                return;
+            }
+            if (recordHistory) {
+                pushHistorySnapshot();
+            }
             kanbanColumnIds.forEach(columnId => {
                 state.order[columnId] = state.order[columnId].filter(id => id !== issueId);
             });
@@ -458,7 +491,10 @@ var PrivateKanbanPage;
             const priority = document.createElement('span');
             priority.className = `kanban-priority kanban-priority-${issue.priority}`;
             priority.textContent = priorityLabel(issue.priority);
-            top.append(key, priority);
+            top.appendChild(key);
+            if (issue.priority) {
+                top.appendChild(priority);
+            }
             const summary = document.createElement('h3');
             summary.className = 'kanban-ticket-summary';
             summary.textContent = issue.summary;
@@ -475,18 +511,6 @@ var PrivateKanbanPage;
             });
             const footer = document.createElement('div');
             footer.className = 'kanban-ticket-footer';
-            const type = document.createElement('span');
-            type.className = 'kanban-ticket-type';
-            type.textContent = titleCase(issue.type);
-            const assignee = document.createElement('span');
-            assignee.className = 'kanban-ticket-assignee';
-            const avatar = document.createElement('span');
-            avatar.className = 'kanban-assignee-avatar';
-            avatar.textContent = getAssigneeInitials(issue.assignee);
-            const assigneeName = document.createElement('span');
-            assigneeName.textContent = issue.assignee;
-            assignee.append(avatar, assigneeName);
-            footer.append(type, assignee);
             card.append(top, summary);
             if (issue.description.trim()) {
                 card.appendChild(description);
@@ -494,7 +518,9 @@ var PrivateKanbanPage;
             if (issue.labels.length) {
                 card.appendChild(labels);
             }
-            card.appendChild(footer);
+            if (footer.childNodes.length) {
+                card.appendChild(footer);
+            }
             card.addEventListener('click', () => openEditIssue(issue.id));
             card.addEventListener('keydown', event => {
                 if (event.key === 'Enter' || event.key === ' ') {
@@ -516,11 +542,6 @@ var PrivateKanbanPage;
             });
             return card;
         }
-        function updateToolbarMeta() {
-            const visibleCount = state.issues.filter(issue => issueMatchesFilters(issue)).length;
-            const highPriorityCount = state.issues.filter(issue => issue.priority === 'high' || issue.priority === 'highest').length;
-            toolbarMetaEl.textContent = `${visibleCount} visible · ${state.order.inprogress.length} active · ${highPriorityCount} high priority`;
-        }
         function renderKanban() {
             const issueMap = new Map(state.issues.map(issue => [issue.id, issue]));
             kanbanColumnIds.forEach(columnId => {
@@ -529,8 +550,7 @@ var PrivateKanbanPage;
                 const allIds = state.order[columnId];
                 const visibleIssues = allIds
                     .map(issueId => issueMap.get(issueId))
-                    .filter((issue) => !!issue)
-                    .filter(issue => issueMatchesFilters(issue));
+                    .filter((issue) => !!issue);
                 container.innerHTML = '';
                 if (visibleIssues.length) {
                     visibleIssues.forEach(issue => {
@@ -540,33 +560,13 @@ var PrivateKanbanPage;
                 else {
                     container.appendChild(createEmptyState());
                 }
-                const countText = (searchTerm || activeFilter !== 'all') && visibleIssues.length !== allIds.length
-                    ? `${visibleIssues.length}/${allIds.length}`
-                    : `${allIds.length}`;
-                countElements[columnId].textContent = countText;
+                countElements[columnId].textContent = `${allIds.length}`;
                 columnElement.classList.toggle('is-over-limit', columnId === 'inprogress' && allIds.length > 3);
             });
-            filterButtons.forEach(button => {
-                button.classList.toggle('is-active', button.dataset.filter === activeFilter);
-            });
-            updateToolbarMeta();
         }
-        searchInputEl.addEventListener('input', () => {
-            searchTerm = searchInputEl.value.trim().toLowerCase();
-            renderKanban();
-        });
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const nextFilter = button.dataset.filter ?? 'all';
-                if (nextFilter === 'all' || isKanbanIssueType(nextFilter)) {
-                    activeFilter = nextFilter;
-                    renderKanban();
-                }
-            });
-        });
         addButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const columnId = button.dataset.col ?? 'backlog';
+                const columnId = button.dataset.col ?? 'todo';
                 if (isKanbanColumnId(columnId)) {
                     openCreateIssue(columnId);
                 }
@@ -602,15 +602,13 @@ var PrivateKanbanPage;
             event.preventDefault();
             const summary = summaryInputEl.value.trim();
             const description = descriptionInputEl.value.trim();
-            const type = typeInputEl.value;
             const priority = priorityInputEl.value;
             const column = statusInputEl.value;
-            const assignee = assigneeInputEl.value.trim() || 'Liam';
             const labels = labelsInputEl.value
                 .split(',')
                 .map(label => label.trim().toLowerCase())
                 .filter(Boolean);
-            if (!summary || !isKanbanIssueType(type) || !isKanbanPriority(priority) || !isKanbanColumnId(column)) {
+            if (!summary || !isKanbanPriority(priority) || !isKanbanColumnId(column)) {
                 return;
             }
             if (editingIssueId) {
@@ -618,31 +616,37 @@ var PrivateKanbanPage;
                 if (!issue)
                     return;
                 const previousColumn = issue.column;
+                const previousSnapshot = cloneState(state);
                 issue.summary = summary;
                 issue.description = description;
-                issue.type = type;
+                issue.type = 'task';
                 issue.priority = priority;
-                issue.assignee = assignee;
+                issue.assignee = '';
                 issue.labels = labels;
                 issue.updatedAt = Date.now();
                 if (previousColumn !== column) {
-                    moveIssue(issue.id, column, null);
+                    historyStack.push(previousSnapshot);
+                    trimHistoryStack();
+                    moveIssue(issue.id, column, null, false);
                 }
                 else {
+                    historyStack.push(previousSnapshot);
+                    trimHistoryStack();
                     requestSave();
                     renderKanban();
                 }
             }
             else {
+                pushHistorySnapshot();
                 const issueId = `private-issue-${state.nextNumber}`;
                 const issue = {
                     id: issueId,
                     key: `LW-${state.nextNumber}`,
                     summary,
                     description,
-                    type,
+                    type: 'task',
                     priority,
-                    assignee,
+                    assignee: '',
                     labels,
                     column,
                     updatedAt: Date.now(),
@@ -658,6 +662,7 @@ var PrivateKanbanPage;
         deleteButtonEl.addEventListener('click', () => {
             if (!editingIssueId)
                 return;
+            pushHistorySnapshot();
             removeIssue(editingIssueId);
             requestSave();
             renderKanban();
@@ -665,13 +670,21 @@ var PrivateKanbanPage;
         });
         closeButtonEl.addEventListener('click', closeDialog);
         cancelButtonEl.addEventListener('click', closeDialog);
-        resetButtonEl.addEventListener('click', () => {
-            state = createDefaultKanbanState();
-            activeFilter = 'all';
-            searchTerm = '';
-            searchInputEl.value = '';
-            requestSave();
-            renderKanban();
+        if (resetButtonEl) {
+            resetButtonEl.addEventListener('click', () => {
+                pushHistorySnapshot();
+                state = createDefaultKanbanState();
+                requestSave();
+                renderKanban();
+            });
+        }
+        window.addEventListener('keydown', event => {
+            const isUndoShortcut = (event.ctrlKey || event.metaKey) && !event.shiftKey && event.key.toLowerCase() === 'z';
+            if (!isUndoShortcut || shouldIgnoreUndoShortcut(event.target)) {
+                return;
+            }
+            event.preventDefault();
+            undoLastChange();
         });
         return {
             render: renderKanban,
@@ -691,6 +704,7 @@ var PrivateKanbanPage;
         const submitButton = document.getElementById('private-login-submit');
         const logoutButton = document.getElementById('private-logout-btn');
         const routeStatus = document.getElementById('private-route-status');
+        const syncStatus = document.getElementById('private-sync-status');
         const userEmail = document.getElementById('private-user-email');
         if (!(loginShell instanceof HTMLElement) ||
             !(boardShell instanceof HTMLElement) ||
@@ -738,6 +752,10 @@ var PrivateKanbanPage;
             const isLoggedIn = !!session?.user;
             setHidden(loginShell, isLoggedIn);
             setHidden(boardShell, !isLoggedIn);
+            setHidden(routeStatus instanceof HTMLElement ? routeStatus : null, false);
+            setHidden(userEmail instanceof HTMLElement ? userEmail : null, !isLoggedIn);
+            setHidden(logoutButton, !isLoggedIn);
+            setHidden(syncStatus instanceof HTMLElement ? syncStatus : null, !isLoggedIn);
             if (errorEl instanceof HTMLElement) {
                 errorEl.classList.add('hidden');
                 errorEl.textContent = '';
@@ -755,8 +773,14 @@ var PrivateKanbanPage;
                     throw new Error('Private board UI could not be initialized.');
                 }
             }
-            const remoteState = await loadRemoteBoard(session.user.id);
-            boardUi.setState(remoteState);
+            try {
+                const remoteState = await loadRemoteBoard(session.user.id);
+                boardUi.setState(remoteState);
+            }
+            catch (error) {
+                console.error('Private kanban load failed:', error);
+                setText(routeStatus instanceof HTMLElement ? routeStatus : null, `Load failed: ${describeError(error)}`);
+            }
         }
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -780,10 +804,14 @@ var PrivateKanbanPage;
             setText(routeStatus instanceof HTMLElement ? routeStatus : null, 'Signed out');
         });
         client.auth.onAuthStateChange((_event, session) => {
-            void showSession(session);
+            void showSession(session).catch(error => {
+                console.error('Private kanban auth state handling failed:', error);
+                setText(routeStatus instanceof HTMLElement ? routeStatus : null, `Auth failed: ${describeError(error)}`);
+            });
         });
         const { data, error } = await client.auth.getSession();
         if (error) {
+            console.error('Private kanban session lookup failed:', error);
             if (errorEl instanceof HTMLElement) {
                 errorEl.textContent = error.message;
                 errorEl.classList.remove('hidden');
@@ -793,6 +821,7 @@ var PrivateKanbanPage;
         await showSession(data.session);
     }
     document.addEventListener('DOMContentLoaded', () => {
+        setupThemeToggle();
         void bootstrap();
     });
 })(PrivateKanbanPage || (PrivateKanbanPage = {}));

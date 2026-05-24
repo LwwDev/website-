@@ -3084,7 +3084,7 @@ h3 {
 }
 
 .private-kanban-shell {
-    width: min(1380px, calc(100% - 2.5rem));
+    width: min(1420px, calc(100% - 2.5rem));
     margin: 0 auto;
     padding: 2rem 0 4rem;
 }
@@ -3213,7 +3213,8 @@ h3 {
 }
 
 .private-login-submit,
-.private-board-logout {
+.private-board-logout,
+.private-theme-toggle {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.08);
@@ -3227,7 +3228,8 @@ h3 {
 }
 
 .private-login-submit:hover,
-.private-board-logout:hover {
+.private-board-logout:hover,
+.private-theme-toggle:hover {
     background: rgba(255, 255, 255, 0.14);
     transform: translateY(-1px);
 }
@@ -3245,11 +3247,30 @@ h3 {
 .private-board-topbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     gap: 1rem;
     padding: 1rem 1.1rem;
     border-radius: 22px;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.private-board-heading {
+    display: grid;
+    gap: 0.28rem;
+}
+
+.private-board-kicker {
+    color: var(--g2);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.private-board-heading h2 {
+    margin: 0;
+    color: var(--white);
+    font-size: 1.55rem;
+    font-family: var(--font-display);
 }
 
 .private-board-user {
@@ -3257,11 +3278,317 @@ h3 {
     align-items: center;
     gap: 0.8rem;
     flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
 .private-board-email {
     color: var(--white);
-    font-size: 0.88rem;
+    font-size: 0.82rem;
+}
+
+.private-theme-toggle {
+    min-width: 4.8rem;
+}
+
+.private-board-workspace {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 1rem;
+}
+
+.private-kanban-page .kanban-filter-btn,
+.private-kanban-page .kanban-add-btn,
+.private-kanban-page .kanban-reset-btn,
+.private-kanban-page .kanban-primary-btn,
+.private-kanban-page .kanban-secondary-btn,
+.private-kanban-page .kanban-danger-btn,
+.private-kanban-page .kanban-dialog-close {
+    border-color: var(--border);
+    background: var(--bg);
+    color: var(--g1);
+}
+
+.private-kanban-page .kanban-board {
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    gap: 1.15rem;
+}
+
+.private-kanban-page .kanban-col {
+    min-height: 0;
+    padding: 0.85rem;
+    background: rgba(10, 10, 10, 0.72);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+}
+
+.private-kanban-page .private-archive-col {
+    grid-column: 1 / -1;
+}
+
+.private-kanban-page .kanban-col-header {
+    align-items: center;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.private-kanban-page .kanban-col-title {
+    color: var(--white);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+}
+
+.private-kanban-page .kanban-count {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border);
+    color: var(--white);
+}
+
+.private-kanban-page .kanban-cards-inner {
+    gap: 0.75rem;
+    min-height: 120px;
+}
+
+.private-kanban-page .kanban-cards-inner.is-over {
+    background: rgba(255, 255, 255, 0.02);
+    outline: 1px dashed rgba(238, 238, 238, 0.18);
+    outline-offset: -4px;
+    border-radius: 18px;
+}
+
+.private-kanban-page .kanban-ticket {
+    gap: 0.6rem;
+    padding: 0.9rem 0.95rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.private-kanban-page .kanban-ticket:hover {
+    border-color: var(--g2);
+    transform: translateY(-1px);
+}
+
+.private-kanban-page .kanban-ticket-key {
+    color: var(--g2);
+}
+
+.private-kanban-page .kanban-ticket-summary {
+    color: var(--white);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.private-kanban-page .kanban-ticket-description {
+    color: var(--g1);
+    font-size: 0.7rem;
+    line-height: 1.55;
+}
+
+.private-kanban-page .kanban-ticket-label {
+    border-color: var(--border);
+    color: var(--g1);
+    background: transparent;
+}
+
+.private-kanban-page .kanban-empty {
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+    color: var(--g2);
+}
+
+.private-kanban-page .kanban-add-btn {
+    margin-top: 0.25rem;
+    text-align: left;
+    background: transparent;
+    border-style: dashed;
+    border-radius: 14px;
+    color: var(--g2);
+}
+
+.private-kanban-page .kanban-add-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--white);
+}
+
+.private-kanban-page .kanban-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(2px);
+}
+
+.private-kanban-page .kanban-dialog-shell {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    color: inherit;
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.22);
+}
+
+.private-kanban-page .kanban-dialog-kicker,
+.private-kanban-page .kanban-field > span {
+    color: var(--g2);
+}
+
+.private-kanban-page .kanban-dialog-title {
+    color: var(--white);
+}
+
+.private-kanban-page .kanban-field input,
+.private-kanban-page .kanban-field select,
+.private-kanban-page .kanban-field textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    color: var(--white);
+}
+
+.private-kanban-page .kanban-primary-btn {
+    background: var(--white);
+    border-color: var(--white);
+    color: var(--bg);
+}
+
+.private-kanban-page .kanban-primary-btn:hover {
+    background: #DCDCDC;
+    border-color: #DCDCDC;
+    color: var(--bg);
+}
+
+.private-kanban-page .kanban-secondary-btn,
+.private-kanban-page .kanban-danger-btn,
+.private-kanban-page .kanban-dialog-close {
+    color: var(--g1);
+}
+
+.private-kanban-page.private-kanban-day {
+    background:
+        radial-gradient(circle at top left, rgba(153, 168, 139, 0.14), transparent 24%),
+        radial-gradient(circle at top right, rgba(194, 176, 140, 0.12), transparent 22%),
+        linear-gradient(180deg, #e8e1d4 0%, #f2ede3 100%);
+    color: #6c6355;
+}
+
+.private-kanban-page.private-kanban-day .private-kanban-header,
+.private-kanban-page.private-kanban-day .private-kanban-card,
+.private-kanban-page.private-kanban-day .private-board-topbar {
+    background: rgba(247, 243, 234, 0.88);
+    border-color: rgba(146, 134, 111, 0.18);
+    box-shadow: 0 26px 70px rgba(101, 88, 68, 0.1);
+}
+
+.private-kanban-page.private-kanban-day .private-kanban-kicker,
+.private-kanban-page.private-kanban-day .private-kanban-card-kicker,
+.private-kanban-page.private-kanban-day .private-board-email,
+.private-kanban-page.private-kanban-day .private-kanban-home-link,
+.private-kanban-page.private-kanban-day .private-board-kicker {
+    color: #7a715f;
+}
+
+.private-kanban-page.private-kanban-day .private-kanban-header h1,
+.private-kanban-page.private-kanban-day .private-kanban-card h2,
+.private-kanban-page.private-kanban-day .private-board-sync,
+.private-kanban-page.private-kanban-day .private-kanban-badge {
+    color: #443b30;
+}
+
+.private-kanban-page.private-kanban-day .private-kanban-badge,
+.private-kanban-page.private-kanban-day .private-board-sync,
+.private-kanban-page.private-kanban-day .private-theme-toggle,
+.private-kanban-page.private-kanban-day .private-board-logout,
+.private-kanban-page.private-kanban-day .private-login-submit {
+    background: rgba(126, 140, 111, 0.08);
+    border-color: rgba(146, 134, 111, 0.18);
+    color: #514639;
+}
+
+.private-kanban-page.private-kanban-day .private-board-workspace {
+    background: rgba(250, 246, 239, 0.74);
+    border-color: rgba(146, 134, 111, 0.16);
+}
+
+.private-kanban-page.private-kanban-day .kanban-col {
+    background: rgba(239, 234, 225, 0.82);
+    border-color: rgba(146, 134, 111, 0.16);
+}
+
+.private-kanban-page.private-kanban-day .kanban-col-title,
+.private-kanban-page.private-kanban-day .kanban-count,
+.private-kanban-page.private-kanban-day .kanban-ticket-summary {
+    color: #4d4234;
+}
+
+.private-kanban-page.private-kanban-day .kanban-count {
+    background: rgba(255, 251, 245, 0.8);
+}
+
+.private-kanban-page.private-kanban-day .kanban-ticket {
+    background: rgba(252, 248, 242, 0.94);
+    border-color: rgba(165, 152, 130, 0.22);
+    box-shadow: 0 10px 24px rgba(122, 110, 90, 0.08);
+}
+
+.private-kanban-page.private-kanban-day .kanban-ticket-key,
+.private-kanban-page.private-kanban-day .kanban-ticket-description,
+.private-kanban-page.private-kanban-day .kanban-ticket-label,
+.private-kanban-page.private-kanban-day .kanban-empty {
+    color: #7d715f;
+}
+
+.private-kanban-page.private-kanban-day .kanban-ticket-label,
+.private-kanban-page.private-kanban-day .kanban-empty,
+.private-kanban-page.private-kanban-day .kanban-add-btn {
+    border-color: rgba(165, 152, 130, 0.22);
+}
+
+.private-kanban-page.private-kanban-day .kanban-add-btn {
+    color: #7d715f;
+}
+
+.private-kanban-page.private-kanban-day .kanban-add-btn:hover {
+    background: rgba(143, 132, 111, 0.06);
+    color: #514639;
+}
+
+.private-kanban-page.private-kanban-day .kanban-dialog::backdrop {
+    background: rgba(210, 201, 185, 0.58);
+}
+
+.private-kanban-page.private-kanban-day .kanban-dialog-shell {
+    background: rgba(249, 245, 238, 0.97);
+    border-color: rgba(146, 134, 111, 0.18);
+}
+
+.private-kanban-page.private-kanban-day .kanban-dialog-title,
+.private-kanban-page.private-kanban-day .kanban-field input,
+.private-kanban-page.private-kanban-day .kanban-field select,
+.private-kanban-page.private-kanban-day .kanban-field textarea {
+    color: #4d4234;
+}
+
+.private-kanban-page.private-kanban-day .kanban-field > span,
+.private-kanban-page.private-kanban-day .kanban-dialog-kicker {
+    color: #7d715f;
+}
+
+.private-kanban-page.private-kanban-day .kanban-field input,
+.private-kanban-page.private-kanban-day .kanban-field select,
+.private-kanban-page.private-kanban-day .kanban-field textarea {
+    background: rgba(255, 251, 245, 0.9);
+    border-color: rgba(165, 152, 130, 0.18);
+}
+
+.private-kanban-page.private-kanban-day .kanban-primary-btn {
+    background: #5d5447;
+    border-color: #5d5447;
+    color: #f7f2eb;
+}
+
+.private-kanban-page.private-kanban-day .kanban-primary-btn:hover {
+    background: #4d4234;
+    border-color: #4d4234;
+    color: #f7f2eb;
 }
 
 .private-board-section {
@@ -3277,6 +3604,14 @@ h3 {
 
     .private-kanban-header-meta {
         align-items: flex-start;
+    }
+
+    .private-board-user {
+        justify-content: flex-start;
+    }
+
+    .private-kanban-page .kanban-board {
+        grid-template-columns: 1fr;
     }
 }
 

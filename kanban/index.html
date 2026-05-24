@@ -15,10 +15,13 @@
             <div>
                 <p class="private-kanban-kicker">private route</p>
                 <h1>Kanban</h1>
-                <p class="private-kanban-copy">The public board stays on the homepage. This one is the logged-in board backed by Supabase.</p>
             </div>
             <div class="private-kanban-header-meta">
                 <span class="private-kanban-badge" id="private-route-status">Private route ready</span>
+                <span id="private-sync-status" class="private-board-sync hidden">Synced</span>
+                <span id="private-user-email" class="private-board-email hidden"></span>
+                <button id="private-theme-toggle" class="private-theme-toggle" type="button" aria-pressed="false">Day</button>
+                <button id="private-logout-btn" class="private-board-logout hidden" type="button">Logout</button>
                 <a href="../" class="private-kanban-home-link">Back to homepage</a>
             </div>
         </header>
@@ -44,70 +47,51 @@
         </section>
 
         <section class="private-kanban-board-shell hidden" id="private-board-shell">
-            <div class="private-board-topbar">
-                <div class="private-board-user">
-                    <span class="private-kanban-badge">signed in</span>
-                    <span id="private-user-email" class="private-board-email"></span>
-                    <span id="private-sync-status" class="private-board-sync">Synced</span>
-                </div>
-                <button id="private-logout-btn" class="private-board-logout" type="button">Logout</button>
-            </div>
-
             <section class="page-section private-board-section">
-                <h2 class="section-title">Private Kanban Board</h2>
-                <div class="kanban-toolbar">
-                    <input id="kanban-search" class="kanban-search" type="search" placeholder="Search issues, labels, or assignee" aria-label="Search issues">
-                    <div class="kanban-filter-group" role="tablist" aria-label="Issue filters">
-                        <button class="kanban-filter-btn is-active" data-filter="all" type="button">All</button>
-                        <button class="kanban-filter-btn" data-filter="story" type="button">Stories</button>
-                        <button class="kanban-filter-btn" data-filter="task" type="button">Tasks</button>
-                        <button class="kanban-filter-btn" data-filter="bug" type="button">Bugs</button>
-                    </div>
-                    <p class="kanban-toolbar-meta" id="kanban-toolbar-meta">0 visible issues</p>
-                </div>
-                <div class="kanban-board">
-                    <div class="kanban-col">
-                        <div class="kanban-col-header">
-                            <div class="kanban-col-copy">
-                                <span class="kanban-col-title">backlog</span>
+                <div class="private-board-workspace">
+                    <div class="kanban-board">
+                        <div class="kanban-col">
+                            <div class="kanban-col-header">
+                                <div class="kanban-col-copy">
+                                    <span class="kanban-col-title">todo</span>
+                                </div>
+                                <span class="kanban-count" id="kcount-todo">0</span>
                             </div>
-                            <span class="kanban-count" id="kcount-backlog">0</span>
+                            <div class="kanban-cards-inner" id="kcards-todo" data-col="todo"></div>
+                            <button class="kanban-add-btn" data-col="todo" type="button">+ create issue</button>
                         </div>
-                        <div class="kanban-cards-inner" id="kcards-backlog" data-col="backlog"></div>
-                        <button class="kanban-add-btn" data-col="backlog" type="button">+ create issue</button>
-                    </div>
-                    <div class="kanban-col">
-                        <div class="kanban-col-header">
-                            <div class="kanban-col-copy">
-                                <span class="kanban-col-title">up next</span>
+                        <div class="kanban-col">
+                            <div class="kanban-col-header">
+                                <div class="kanban-col-copy">
+                                    <span class="kanban-col-title">in progress</span>
+                                </div>
+                                <span class="kanban-count" id="kcount-inprogress">0</span>
                             </div>
-                            <span class="kanban-count" id="kcount-selected">0</span>
+                            <div class="kanban-cards-inner" id="kcards-inprogress" data-col="inprogress"></div>
+                            <button class="kanban-add-btn" data-col="inprogress" type="button">+ create issue</button>
                         </div>
-                        <div class="kanban-cards-inner" id="kcards-selected" data-col="selected"></div>
-                        <button class="kanban-add-btn" data-col="selected" type="button">+ create issue</button>
-                    </div>
-                    <div class="kanban-col">
-                        <div class="kanban-col-header">
-                            <div class="kanban-col-copy">
-                                <span class="kanban-col-title">in progress</span>
+                        <div class="kanban-col">
+                            <div class="kanban-col-header">
+                                <div class="kanban-col-copy">
+                                    <span class="kanban-col-title">done</span>
+                                </div>
+                                <span class="kanban-count" id="kcount-done">0</span>
                             </div>
-                            <span class="kanban-count" id="kcount-inprogress">0</span>
+                            <div class="kanban-cards-inner" id="kcards-done" data-col="done"></div>
+                            <button class="kanban-add-btn" data-col="done" type="button">+ create issue</button>
                         </div>
-                        <div class="kanban-cards-inner" id="kcards-inprogress" data-col="inprogress"></div>
-                        <button class="kanban-add-btn" data-col="inprogress" type="button">+ create issue</button>
-                    </div>
-                    <div class="kanban-col">
-                        <div class="kanban-col-header">
-                            <div class="kanban-col-copy">
-                                <span class="kanban-col-title">done</span>
+                        <div class="kanban-col private-archive-col">
+                            <div class="kanban-col-header">
+                                <div class="kanban-col-copy">
+                                    <span class="kanban-col-title">archive</span>
+                                </div>
+                                <span class="kanban-count" id="kcount-archive">0</span>
                             </div>
-                            <span class="kanban-count" id="kcount-done">0</span>
+                            <div class="kanban-cards-inner" id="kcards-archive" data-col="archive"></div>
+                            <button class="kanban-add-btn" data-col="archive" type="button">+ drop an idea here</button>
                         </div>
-                        <div class="kanban-cards-inner" id="kcards-done" data-col="done"></div>
-                        <button class="kanban-add-btn" data-col="done" type="button">+ create issue</button>
                     </div>
                 </div>
-                <button class="kanban-reset-btn" id="kanban-reset" type="button">reset board</button>
             </section>
         </section>
     </main>
@@ -131,16 +115,9 @@
                     <textarea id="kanban-description-input" name="description" rows="4" placeholder="Add a few details about the issue"></textarea>
                 </label>
                 <label class="kanban-field">
-                    <span>Type</span>
-                    <select id="kanban-type-input" name="type">
-                        <option value="story">Story</option>
-                        <option value="task">Task</option>
-                        <option value="bug">Bug</option>
-                    </select>
-                </label>
-                <label class="kanban-field">
                     <span>Priority</span>
                     <select id="kanban-priority-input" name="priority">
+                        <option value="">None</option>
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
@@ -150,15 +127,11 @@
                 <label class="kanban-field">
                     <span>Status</span>
                     <select id="kanban-status-input" name="status">
-                        <option value="backlog">Backlog</option>
-                        <option value="selected">Up Next</option>
+                        <option value="todo">Todo</option>
                         <option value="inprogress">In Progress</option>
                         <option value="done">Done</option>
+                        <option value="archive">Archive</option>
                     </select>
-                </label>
-                <label class="kanban-field">
-                    <span>Assignee</span>
-                    <input id="kanban-assignee-input" name="assignee" type="text" maxlength="32" placeholder="Liam">
                 </label>
                 <label class="kanban-field kanban-field-full">
                     <span>Labels</span>
