@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam Wohlstedt | Private Kanban</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="private-kanban-page">
+    <main class="private-kanban-shell">
+        <header class="private-kanban-header">
+            <div>
+                <p class="private-kanban-kicker">private route</p>
+                <h1>Kanban</h1>
+                <p class="private-kanban-copy">The public board stays on the homepage. This one is the logged-in board backed by Supabase.</p>
+            </div>
+            <div class="private-kanban-header-meta">
+                <span class="private-kanban-badge" id="private-route-status">Private route ready</span>
+                <a href="../" class="private-kanban-home-link">Back to homepage</a>
+            </div>
+        </header>
+
+        <section class="private-kanban-gate" id="private-login-shell">
+            <div class="private-kanban-card">
+                <p class="private-kanban-card-kicker">sign in</p>
+                <h2>Private board access</h2>
+                <p class="private-kanban-card-copy">Use your Supabase auth email and password to open the real board.</p>
+                <form id="private-login-form" class="private-login-form">
+                    <label class="private-login-field">
+                        <span>Email</span>
+                        <input id="private-email-input" type="email" autocomplete="email" required>
+                    </label>
+                    <label class="private-login-field">
+                        <span>Password</span>
+                        <input id="private-password-input" type="password" autocomplete="current-password" required>
+                    </label>
+                    <button id="private-login-submit" class="private-login-submit" type="submit">Open private board</button>
+                </form>
+                <p id="private-login-error" class="private-login-error hidden"></p>
+            </div>
+        </section>
+
+        <section class="private-kanban-board-shell hidden" id="private-board-shell">
+            <div class="private-board-topbar">
+                <div class="private-board-user">
+                    <span class="private-kanban-badge">signed in</span>
+                    <span id="private-user-email" class="private-board-email"></span>
+                    <span id="private-sync-status" class="private-board-sync">Synced</span>
+                </div>
+                <button id="private-logout-btn" class="private-board-logout" type="button">Logout</button>
+            </div>
+
+            <section class="page-section private-board-section">
+                <h2 class="section-title">Private Kanban Board</h2>
+                <div class="kanban-toolbar">
+                    <input id="kanban-search" class="kanban-search" type="search" placeholder="Search issues, labels, or assignee" aria-label="Search issues">
+                    <div class="kanban-filter-group" role="tablist" aria-label="Issue filters">
+                        <button class="kanban-filter-btn is-active" data-filter="all" type="button">All</button>
+                        <button class="kanban-filter-btn" data-filter="story" type="button">Stories</button>
+                        <button class="kanban-filter-btn" data-filter="task" type="button">Tasks</button>
+                        <button class="kanban-filter-btn" data-filter="bug" type="button">Bugs</button>
+                    </div>
+                    <p class="kanban-toolbar-meta" id="kanban-toolbar-meta">0 visible issues</p>
+                </div>
+                <div class="kanban-board">
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <div class="kanban-col-copy">
+                                <span class="kanban-col-title">backlog</span>
+                            </div>
+                            <span class="kanban-count" id="kcount-backlog">0</span>
+                        </div>
+                        <div class="kanban-cards-inner" id="kcards-backlog" data-col="backlog"></div>
+                        <button class="kanban-add-btn" data-col="backlog" type="button">+ create issue</button>
+                    </div>
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <div class="kanban-col-copy">
+                                <span class="kanban-col-title">up next</span>
+                            </div>
+                            <span class="kanban-count" id="kcount-selected">0</span>
+                        </div>
+                        <div class="kanban-cards-inner" id="kcards-selected" data-col="selected"></div>
+                        <button class="kanban-add-btn" data-col="selected" type="button">+ create issue</button>
+                    </div>
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <div class="kanban-col-copy">
+                                <span class="kanban-col-title">in progress</span>
+                            </div>
+                            <span class="kanban-count" id="kcount-inprogress">0</span>
+                        </div>
+                        <div class="kanban-cards-inner" id="kcards-inprogress" data-col="inprogress"></div>
+                        <button class="kanban-add-btn" data-col="inprogress" type="button">+ create issue</button>
+                    </div>
+                    <div class="kanban-col">
+                        <div class="kanban-col-header">
+                            <div class="kanban-col-copy">
+                                <span class="kanban-col-title">done</span>
+                            </div>
+                            <span class="kanban-count" id="kcount-done">0</span>
+                        </div>
+                        <div class="kanban-cards-inner" id="kcards-done" data-col="done"></div>
+                        <button class="kanban-add-btn" data-col="done" type="button">+ create issue</button>
+                    </div>
+                </div>
+                <button class="kanban-reset-btn" id="kanban-reset" type="button">reset board</button>
+            </section>
+        </section>
+    </main>
+
+    <dialog id="kanban-dialog" class="kanban-dialog">
+        <form method="dialog" class="kanban-dialog-shell" id="kanban-form">
+            <div class="kanban-dialog-header">
+                <div>
+                    <p class="kanban-dialog-kicker" id="kanban-dialog-mode">Create issue</p>
+                    <h3 class="kanban-dialog-title" id="kanban-dialog-title">New issue</h3>
+                </div>
+                <button class="kanban-dialog-close" id="kanban-dialog-close" type="button" aria-label="Close issue dialog">close</button>
+            </div>
+            <div class="kanban-form-grid">
+                <label class="kanban-field kanban-field-full">
+                    <span>Summary</span>
+                    <input id="kanban-summary-input" name="summary" type="text" maxlength="120" placeholder="What needs to happen?" required>
+                </label>
+                <label class="kanban-field kanban-field-full">
+                    <span>Description</span>
+                    <textarea id="kanban-description-input" name="description" rows="4" placeholder="Add a few details about the issue"></textarea>
+                </label>
+                <label class="kanban-field">
+                    <span>Type</span>
+                    <select id="kanban-type-input" name="type">
+                        <option value="story">Story</option>
+                        <option value="task">Task</option>
+                        <option value="bug">Bug</option>
+                    </select>
+                </label>
+                <label class="kanban-field">
+                    <span>Priority</span>
+                    <select id="kanban-priority-input" name="priority">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="highest">Highest</option>
+                    </select>
+                </label>
+                <label class="kanban-field">
+                    <span>Status</span>
+                    <select id="kanban-status-input" name="status">
+                        <option value="backlog">Backlog</option>
+                        <option value="selected">Up Next</option>
+                        <option value="inprogress">In Progress</option>
+                        <option value="done">Done</option>
+                    </select>
+                </label>
+                <label class="kanban-field">
+                    <span>Assignee</span>
+                    <input id="kanban-assignee-input" name="assignee" type="text" maxlength="32" placeholder="Liam">
+                </label>
+                <label class="kanban-field kanban-field-full">
+                    <span>Labels</span>
+                    <input id="kanban-labels-input" name="labels" type="text" placeholder="portfolio, ui, polish">
+                </label>
+            </div>
+            <div class="kanban-dialog-actions">
+                <button class="kanban-danger-btn" id="kanban-delete-btn" type="button">Delete issue</button>
+                <button class="kanban-secondary-btn" id="kanban-cancel-btn" type="button">Cancel</button>
+                <button class="kanban-primary-btn" id="kanban-save-btn" type="submit">Save issue</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../dist/kanban.js"></script>
+</body>
+</html>

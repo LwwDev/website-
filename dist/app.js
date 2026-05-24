@@ -1,92 +1,4 @@
 "use strict";
-// === AUTH & SUPABASE ===
-const SUPABASE_URL = 'https://tcgpjwzviqdhbtjsohlq.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_2lsTFLaVGNdUXczWZ_Mw0w_5UCF9KHZ';
-const DASHBOARD_PASSWORD = '067279';
-let supabaseClient = null;
-let isAuthenticated = false;
-function initSupabase() {
-    const win = window;
-    if (typeof win.supabase !== 'undefined') {
-        supabaseClient = win.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    }
-}
-function checkAuthStatus() {
-    const token = localStorage.getItem('dashboard-auth-token');
-    isAuthenticated = token === DASHBOARD_PASSWORD;
-    updateAuthUI();
-}
-function setupAuth() {
-    const authModal = document.getElementById('auth-modal');
-    const authForm = document.getElementById('auth-form');
-    const passwordInput = document.getElementById('auth-password-input');
-    const errorDiv = document.getElementById('auth-error');
-    const logoutBtn = document.getElementById('auth-logout-btn');
-    if (authForm) {
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const password = passwordInput.value;
-            if (password === DASHBOARD_PASSWORD) {
-                localStorage.setItem('dashboard-auth-token', DASHBOARD_PASSWORD);
-                isAuthenticated = true;
-                updateAuthUI();
-                if (authModal)
-                    authModal.classList.add('hidden');
-                passwordInput.value = '';
-                if (errorDiv)
-                    errorDiv.classList.add('hidden');
-            }
-            else {
-                if (errorDiv) {
-                    errorDiv.textContent = 'Invalid password';
-                    errorDiv.classList.remove('hidden');
-                }
-            }
-        });
-    }
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('dashboard-auth-token');
-            isAuthenticated = false;
-            updateAuthUI();
-            if (authModal)
-                authModal.classList.remove('hidden');
-            passwordInput.value = '';
-            passwordInput.focus();
-            if (errorDiv)
-                errorDiv.classList.add('hidden');
-        });
-    }
-}
-function updateAuthUI() {
-    const authModal = document.getElementById('auth-modal');
-    const authTopbar = document.getElementById('auth-topbar');
-    const boardSection = document.getElementById('board');
-    if (authModal) {
-        if (isAuthenticated) {
-            authModal.classList.add('hidden');
-        }
-        else {
-            authModal.classList.remove('hidden');
-        }
-    }
-    if (authTopbar) {
-        if (isAuthenticated) {
-            authTopbar.classList.remove('hidden');
-        }
-        else {
-            authTopbar.classList.add('hidden');
-        }
-    }
-    if (boardSection) {
-        if (isAuthenticated) {
-            boardSection.classList.remove('hidden');
-        }
-        else {
-            boardSection.classList.add('hidden');
-        }
-    }
-}
 const sectionIds = ['work', 'projects', 'about', 'uses', 'library', 'travel', 'keyboards', 'board', 'notes', 'game'];
 let currentSection = 'work';
 function scrollToSection(sectionId, pushHistory = true) {
@@ -1884,9 +1796,6 @@ function setupScrollProgress() {
     update();
 }
 document.addEventListener('DOMContentLoaded', () => {
-    initSupabase();
-    setupAuth();
-    checkAuthStatus();
     setupHashNavigation();
     setupCursorFx();
     setupEmailCopy();

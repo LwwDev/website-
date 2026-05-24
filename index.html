@@ -10,27 +10,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body id="top">
-    <div id="auth-modal" class="auth-modal hidden" aria-label="Login">
-        <div class="auth-modal-content">
-            <div class="auth-modal-header">
-                <h2>Private Dashboard</h2>
-                <p class="auth-modal-subtitle">Enter password to access</p>
-            </div>
-            <form id="auth-form" class="auth-form">
-                <input
-                    type="password"
-                    id="auth-password-input"
-                    class="auth-input"
-                    placeholder="Password"
-                    required
-                    autofocus
-                >
-                <button type="submit" class="auth-submit-btn">Login</button>
-            </form>
-            <div id="auth-error" class="auth-error hidden"></div>
-        </div>
-    </div>
-
     <nav id="section-progress" aria-label="Page sections"></nav>
     <canvas id="cursor-fx" aria-hidden="true"></canvas>
     <div class="cursor-shell" aria-hidden="true">
@@ -115,10 +94,6 @@ ___H_____H_____H_____H____O =========== O____H_____H_____H_____H___
             </div>
         </div>
     </section>
-
-    <div id="auth-topbar" class="auth-topbar hidden">
-        <button id="auth-logout-btn" class="auth-logout-btn">Logout</button>
-    </div>
 
     <section class="graph-section">
         <div class="graph-label">
@@ -703,8 +678,7 @@ ___H_____H_____H_____H____O =========== O____H_____H_____H_____H___
             </div>
         </section>
 
-        <!-- board section -->
-        <section id="board" class="page-section hidden">
+        <section id="board" class="page-section">
             <h2 class="section-title">Kanban Board</h2>
             <div class="kanban-toolbar">
                 <input id="kanban-search" class="kanban-search" type="search" placeholder="Search issues, labels, or assignee" aria-label="Search issues">
@@ -930,7 +904,6 @@ ___H_____H_____H_____H____O =========== O____H_____H_____H_____H___
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/topojson-client@3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="dist/app.js"></script>
 </body>
 </html>
