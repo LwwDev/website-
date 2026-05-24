@@ -1,6 +1,7 @@
 // main app code for portfolio site
 declare const d3: any;
 declare const topojson: any;
+declare const supabase: any;
 
 type SectionId = 'work' | 'projects' | 'about' | 'uses' | 'library' | 'travel' | 'keyboards' | 'board' | 'notes' | 'game';
 type GraphNodeType = 'core' | 'menu' | 'detail';
@@ -14,6 +15,98 @@ interface CursorSpark {
     maxLife: number;
     rotation: number;
     spin: number;
+}
+
+// === AUTH & SUPABASE ===
+const SUPABASE_URL = 'https://tcgpjwzviqdhbtjsohlq.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_2lsTFLaVGNdUXczWZ_Mw0w_5UCF9KHZ';
+const DASHBOARD_PASSWORD = '067279';
+
+let supabaseClient: any = null;
+let isAuthenticated = false;
+
+function initSupabase(): void {
+    const win = window as any;
+    if (typeof win.supabase !== 'undefined') {
+        supabaseClient = win.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
+}
+
+function checkAuthStatus(): void {
+    const token = localStorage.getItem('dashboard-auth-token');
+    isAuthenticated = token === DASHBOARD_PASSWORD;
+    updateAuthUI();
+}
+
+function setupAuth(): void {
+    const authModal = document.getElementById('auth-modal');
+    const authForm = document.getElementById('auth-form') as HTMLFormElement;
+    const passwordInput = document.getElementById('auth-password-input') as HTMLInputElement;
+    const errorDiv = document.getElementById('auth-error');
+    const logoutBtn = document.getElementById('auth-logout-btn');
+
+    if (authForm) {
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const password = passwordInput.value;
+
+            if (password === DASHBOARD_PASSWORD) {
+                localStorage.setItem('dashboard-auth-token', DASHBOARD_PASSWORD);
+                isAuthenticated = true;
+                updateAuthUI();
+                if (authModal) authModal.classList.add('hidden');
+                passwordInput.value = '';
+                if (errorDiv) errorDiv.classList.add('hidden');
+            } else {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Invalid password';
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+        });
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('dashboard-auth-token');
+            isAuthenticated = false;
+            updateAuthUI();
+            if (authModal) authModal.classList.remove('hidden');
+            passwordInput.value = '';
+            passwordInput.focus();
+            if (errorDiv) errorDiv.classList.add('hidden');
+        });
+    }
+}
+
+function updateAuthUI(): void {
+    const authModal = document.getElementById('auth-modal');
+    const authTopbar = document.getElementById('auth-topbar');
+    const boardSection = document.getElementById('board');
+
+    if (authModal) {
+        if (isAuthenticated) {
+            authModal.classList.add('hidden');
+        } else {
+            authModal.classList.remove('hidden');
+        }
+    }
+
+    if (authTopbar) {
+        if (isAuthenticated) {
+            authTopbar.classList.remove('hidden');
+        } else {
+            authTopbar.classList.add('hidden');
+        }
+    }
+
+    if (boardSection) {
+        if (isAuthenticated) {
+            boardSection.classList.remove('hidden');
+        } else {
+            boardSection.classList.add('hidden');
+        }
+    }
 }
 
 const sectionIds: SectionId[] = ['work', 'projects', 'about', 'uses', 'library', 'travel', 'keyboards', 'board', 'notes', 'game'];
@@ -2012,6 +2105,10 @@ function setupScrollProgress(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    initSupabase();
+    setupAuth();
+    checkAuthStatus();
+
     setupHashNavigation();
     setupCursorFx();
     setupEmailCopy();

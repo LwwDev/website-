@@ -1,5 +1,6 @@
 declare const d3: any;
 declare const topojson: any;
+declare const supabase: any;
 type SectionId = 'work' | 'projects' | 'about' | 'uses' | 'library' | 'travel' | 'keyboards' | 'board' | 'notes' | 'game';
 type GraphNodeType = 'core' | 'menu' | 'detail';
 interface CursorSpark {
@@ -13,6 +14,15 @@ interface CursorSpark {
     rotation: number;
     spin: number;
 }
+declare const SUPABASE_URL = "https://tcgpjwzviqdhbtjsohlq.supabase.co";
+declare const SUPABASE_KEY = "sb_publishable_2lsTFLaVGNdUXczWZ_Mw0w_5UCF9KHZ";
+declare const DASHBOARD_PASSWORD = "067279";
+declare let supabaseClient: any;
+declare let isAuthenticated: boolean;
+declare function initSupabase(): void;
+declare function checkAuthStatus(): void;
+declare function setupAuth(): void;
+declare function updateAuthUI(): void;
 declare const sectionIds: SectionId[];
 declare let currentSection: SectionId;
 declare function scrollToSection(sectionId: SectionId, pushHistory?: boolean): void;
