@@ -92,6 +92,10 @@
     background: rgba(255,255,255,0.85); color: var(--coral-deep); font-weight: 700;
     padding: 0.45rem 1.1rem; border-radius: 100px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(176,74,107,0.18);
   }
+  .hero-chips .countdown-chip {
+    background: rgba(255,255,255,0.92);
+    color: var(--berry);
+  }
   .hero-ship { margin-top: 1.5rem; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 0.18em; font-size: 0.78rem; text-transform: uppercase; animation: pop 0.7s 0.5s ease both; }
   @keyframes pop { from{opacity:0; transform: translateY(20px) scale(0.96);} to{opacity:1; transform: translateY(0) scale(1);} }
 
@@ -239,6 +243,35 @@
   .tile ul { list-style: none; font-size: 0.85rem; font-weight: 600; color: #5a4540; }
   .tile ul li { padding: 0.22rem 0; padding-left: 1.3rem; position: relative; }
   .tile ul li::before { content: '☀'; position: absolute; left: 0; color: var(--peach); font-size: 0.8rem; }
+  .countdown-clock {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.65rem;
+    margin: 0.9rem 0 0.85rem;
+  }
+  .countdown-unit {
+    background: var(--cream-deep);
+    border: 2px solid var(--peach);
+    border-radius: 18px;
+    padding: 0.8rem 0.45rem;
+    text-align: center;
+  }
+  .countdown-unit strong {
+    display: block;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.35rem;
+    color: var(--berry);
+    line-height: 1;
+  }
+  .countdown-unit span {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--soft-ink);
+    font-weight: 800;
+  }
 
   .flight-route { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin: 0.6rem 0; }
   .flight-route .code { font-family: 'Baloo 2'; font-size: 1.5rem; font-weight: 800; color: var(--ink); text-align: center; }
@@ -306,6 +339,19 @@
     .hero-chips span {
       font-size: 0.78rem;
       padding: 0.38rem 0.82rem;
+    }
+    .countdown-clock {
+      gap: 0.45rem;
+    }
+    .countdown-unit {
+      border-radius: 14px;
+      padding: 0.7rem 0.3rem;
+    }
+    .countdown-unit strong {
+      font-size: 1.08rem;
+    }
+    .countdown-unit span {
+      font-size: 0.6rem;
     }
     .sticker-row {
       gap: 0.42rem;
@@ -381,6 +427,7 @@
       <span>📅 June 5–14, 2026</span>
       <span>🛳 10 days</span>
       <span>⚓ 7 ports</span>
+      <span class="countdown-chip" id="hero-countdown-chip">⏳ Countdown loading...</span>
     </div>
     <div class="sticker-row">
       <span class="sticker">🍦 gelato mode</span>
@@ -438,10 +485,16 @@
   <div class="tile-grid">
     <div class="tile">
       <span class="tag">☀️ Countdown</span>
-      <h4>6 Days Until Departure ☀️🚢</h4>
+      <h4 id="countdown-title">6 Days Until Departure ☀️🚢</h4>
       <div class="addr">The trip is no longer in the planning phase. It is officially in the countdown phase now.</div>
+      <div class="countdown-clock" aria-label="Departure countdown">
+        <div class="countdown-unit"><strong id="countdown-days">6</strong><span>Days</span></div>
+        <div class="countdown-unit"><strong id="countdown-hours">00</strong><span>Hours</span></div>
+        <div class="countdown-unit"><strong id="countdown-minutes">00</strong><span>Minutes</span></div>
+        <div class="countdown-unit"><strong id="countdown-seconds">00</strong><span>Seconds</span></div>
+      </div>
       <ul>
-        <li>Departure in 6 days</li>
+        <li id="countdown-copy">Departure in 6 days</li>
         <li>Trip readiness is approximately 99%</li>
         <li>Purpose: relax, eat great food, spend time together, enjoy the cruise, avoid rushing, come home rested</li>
       </ul>
@@ -797,6 +850,43 @@
 </div>
 
 <script>
+  (function() {
+    var departure = new Date('2026-06-05T00:00:00+02:00').getTime();
+    var titleEl = document.getElementById('countdown-title');
+    var copyEl = document.getElementById('countdown-copy');
+    var chipEl = document.getElementById('hero-countdown-chip');
+    var daysEl = document.getElementById('countdown-days');
+    var hoursEl = document.getElementById('countdown-hours');
+    var minutesEl = document.getElementById('countdown-minutes');
+    var secondsEl = document.getElementById('countdown-seconds');
+
+    function pad(value) {
+      return String(value).padStart(2, '0');
+    }
+
+    function updateCountdown() {
+      var now = Date.now();
+      var diff = Math.max(0, departure - now);
+      var totalSeconds = Math.floor(diff / 1000);
+      var days = Math.floor(totalSeconds / 86400);
+      var hours = Math.floor((totalSeconds % 86400) / 3600);
+      var minutes = Math.floor((totalSeconds % 3600) / 60);
+      var seconds = totalSeconds % 60;
+
+      if (daysEl) daysEl.textContent = String(days);
+      if (hoursEl) hoursEl.textContent = pad(hours);
+      if (minutesEl) minutesEl.textContent = pad(minutes);
+      if (secondsEl) secondsEl.textContent = pad(seconds);
+
+      if (titleEl) titleEl.textContent = days > 0 ? days + ' Days Until Departure ☀️🚢' : 'Departure Day ☀️🚢';
+      if (copyEl) copyEl.textContent = days > 0 ? 'Departure in ' + days + ' days' : 'It is departure day!';
+      if (chipEl) chipEl.textContent = days > 0 ? '⏳ ' + days + ' days to go' : '☀️ Departure day';
+    }
+
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+  })();
+
   document.querySelectorAll('.quicknav a[href^="#"]').forEach(function(link) {
     link.addEventListener('click', function(event) {
       event.preventDefault();
