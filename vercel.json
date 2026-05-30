@@ -1,5 +1,31 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": ".",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "routes": [
+    {
+      "src": "^/cruise/?$",
+      "dest": "/cruise/index.html"
+    },
+    {
+      "src": "^/api/cruise-login/?$",
+      "dest": "/api/cruise-login.js"
+    },
+    {
+      "src": "^/api/cruise-logout/?$",
+      "dest": "/api/cruise-logout.js"
+    },
+    {
+      "src": "^/api/cruise-session/?$",
+      "dest": "/api/cruise-session.js"
+    },
+    {
+      "src": "^/api/cruise-content/?$",
+      "dest": "/api/cruise-content.js"
+    },
+    {
+      "src": "^/(private|cruise-sunset-soft\\.html|cruise\\.html)(?:/.*)?$",
+      "status": 404
+    }
+  ]
 }

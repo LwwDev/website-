@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Mediterranean Cruise · June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fff8f4;
+    --cream-deep: #ffeef0;
+    --peach: #ffcdc9;
+    --coral: #ff9d92;
+    --coral-deep: #e87a7f;
+    --tangerine: #f58a8f;
+    --sunset-red: #d96a8a;
+    --plum: #6b4a64;
+    --berry: #a86384;
+    --ink: #4a3340;
+    --soft-ink: #927684;
+    --sun-yellow: #ffd9a8;
+    --sea: #6a9fb5;
+    --sea-soft: #e0eef3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Baloo 2', cursive; line-height: 1.15; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 3rem 2rem; position: relative; overflow: hidden;
+    background: linear-gradient(180deg, #ffe3c4 0%, #ffc9bf 32%, #ff9d92 58%, #e87a8f 80%, #a86384 100%);
+  }
+
+  /* big sun */
+  .hero .sun {
+    position: absolute; top: 18%; left: 50%; transform: translateX(-50%);
+    width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 45%, #fff6ec 0%, #ffe6cf 50%, #ffd9a8 100%);
+    box-shadow: 0 0 80px 30px rgba(255,217,168,0.55);
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{ transform: translateX(-50%) translateY(0);} 50%{ transform: translateX(-50%) translateY(-18px);} }
+
+  /* wave bottom */
+  .hero .waves { position: absolute; bottom: -2px; left: 0; width: 100%; z-index: 1; }
+
+  /* cruise ship */
+  .hero .ship {
+    position: absolute; bottom: 38px; left: 50%; width: 230px; max-width: 60vw;
+    transform: translateX(-50%); z-index: 2;
+    animation: sail 5s ease-in-out infinite;
+  }
+  @keyframes sail {
+    0%,100% { transform: translateX(-50%) translateY(0) rotate(-1deg); }
+    50% { transform: translateX(-50%) translateY(-8px) rotate(1deg); }
+  }
+
+  .hero-content { position: relative; z-index: 3; margin-top: 7rem; margin-bottom: 7rem; }
+  .hero-pre {
+    display: inline-block; background: rgba(255,255,255,0.25); backdrop-filter: blur(6px);
+    padding: 0.4rem 1.2rem; border-radius: 100px; color: #fff; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.25rem;
+    animation: pop 0.7s ease both;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 9vw, 6.5rem); color: #fff; font-weight: 800;
+    text-shadow: 0 4px 0 rgba(176,74,107,0.3); animation: pop 0.7s 0.1s ease both;
+  }
+  .hero h1 .squiggle { color: var(--sun-yellow); display: inline-block; }
+  .hero-sub { font-size: 1.3rem; color: #fff; font-weight: 600; margin-top: 0.5rem; animation: pop 0.7s 0.2s ease both; }
+  .hero-names {
+    margin-top: 1.5rem; font-family: 'Baloo 2'; font-size: 1.4rem; font-weight: 700; color: #fff;
+    animation: pop 0.7s 0.3s ease both;
+  }
+  .hero-names .heart { color: var(--sunset-red); animation: beat 1.3s ease infinite; display: inline-block; }
+  @keyframes beat { 0%,100%{transform:scale(1);} 25%{transform:scale(1.25);} 40%{transform:scale(1.05);} }
+  .hero-chips { margin-top: 1.75rem; display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; animation: pop 0.7s 0.4s ease both; }
+  .hero-chips span {
+    background: rgba(255,255,255,0.85); color: var(--coral-deep); font-weight: 700;
+    padding: 0.45rem 1.1rem; border-radius: 100px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(176,74,107,0.18);
+  }
+  .hero-ship { margin-top: 1.5rem; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 0.18em; font-size: 0.78rem; text-transform: uppercase; animation: pop 0.7s 0.5s ease both; }
+  @keyframes pop { from{opacity:0; transform: translateY(20px) scale(0.96);} to{opacity:1; transform: translateY(0) scale(1);} }
+
+  /* ── NAV ── */
+  .quicknav {
+    position: sticky; top: 0; z-index: 50; background: rgba(255,246,238,0.92);
+    backdrop-filter: blur(12px); border-bottom: 2px dashed var(--peach);
+    padding: 0.85rem 1rem; display: flex; gap: 0.4rem; justify-content: center; flex-wrap: wrap;
+  }
+  .quicknav a {
+    font-size: 0.82rem; font-weight: 700; text-decoration: none; color: var(--soft-ink);
+    padding: 0.4rem 1rem; border-radius: 100px; transition: all 0.2s;
+  }
+  .quicknav a:hover { background: var(--coral); color: #fff; transform: translateY(-2px); }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy { text-align: center; padding: 4rem 2rem 2rem; }
+  .philosophy p { font-size: 1.25rem; font-weight: 600; color: var(--berry); max-width: 600px; margin: 0 auto; }
+  .philosophy p .big { font-family: 'Baloo 2'; color: var(--tangerine); }
+  .philosophy .rules { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-top: 1.75rem; }
+  .philosophy .rules span {
+    background: var(--cream-deep); color: var(--coral-deep); font-weight: 700; padding: 0.5rem 1.2rem;
+    border-radius: 100px; font-size: 0.85rem; border: 2px solid var(--peach);
+  }
+  .philosophy .balance { margin-top: 1.5rem; font-weight: 700; color: var(--soft-ink); }
+  .philosophy .balance b { color: var(--tangerine); }
+
+  /* ── SECTION HEADER ── */
+  .container { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+  .section-header { text-align: center; padding: 4.5rem 2rem 2rem; }
+  .section-header .kicker {
+    display: inline-block; background: var(--sun-yellow); color: var(--ink); font-weight: 800;
+    padding: 0.3rem 1rem; border-radius: 100px; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.9rem;
+  }
+  .section-header h2 { font-size: 2.6rem; font-weight: 800; color: var(--ink); }
+  .section-header h2 .acc { color: var(--tangerine); }
+  .section-header p { color: var(--soft-ink); font-weight: 600; margin-top: 0.3rem; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding: 1rem 0 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px;
+    background: repeating-linear-gradient(180deg, var(--peach) 0 14px, transparent 14px 26px);
+    transform: translateX(-50%);
+  }
+  .tl-item { position: relative; width: 50%; padding: 1rem 2.5rem; }
+  .tl-item:nth-child(odd) { left: 0; text-align: right; }
+  .tl-item:nth-child(even) { left: 50%; }
+  .tl-dot {
+    position: absolute; top: 1.9rem; width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    color: #fff; font-weight: 800; font-family: 'Baloo 2'; z-index: 2;
+    box-shadow: 0 4px 14px rgba(240,96,62,0.3); border: 4px solid var(--cream);
+  }
+  .tl-item:nth-child(odd) .tl-dot { right: -23px; }
+  .tl-item:nth-child(even) .tl-dot { left: -23px; }
+
+  .day-card {
+    background: #fff; border-radius: 24px; padding: 1.5rem 1.6rem; text-align: left;
+    box-shadow: 0 8px 28px rgba(176,74,107,0.1); border: 2px solid var(--cream-deep);
+    transition: transform 0.2s; display: inline-block; text-align: left; width: 100%;
+  }
+  .day-card:hover { transform: translateY(-4px); }
+  .day-card .top { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .day-date { font-weight: 700; font-size: 0.78rem; color: var(--soft-ink); text-transform: uppercase; letter-spacing: 0.05em; }
+  .day-badge { font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.2rem 0.7rem; border-radius: 100px; }
+  .day-card h3 { font-size: 1.4rem; font-weight: 800; color: var(--ink); }
+  .day-card .loc { font-size: 0.82rem; color: var(--coral-deep); font-weight: 700; margin: 0.15rem 0 0.7rem; }
+  .day-card .loc .hrs { background: var(--sea-soft); color: var(--sea); padding: 0.05rem 0.5rem; border-radius: 100px; font-size: 0.7rem; margin-left: 0.3rem; }
+  .day-card p { font-size: 0.9rem; color: #5a4540; font-weight: 500; }
+  .day-note { margin-top: 0.8rem; background: var(--cream); border-radius: 14px; padding: 0.75rem 1rem; font-size: 0.82rem; color: var(--soft-ink); font-weight: 600; }
+  .day-note.excursion { background: #ffe9df; color: var(--coral-deep); }
+  .day-note b { color: var(--ink); }
+  .day-temp { margin-top: 0.6rem; font-size: 0.8rem; font-weight: 700; color: var(--sea); }
+  .day-temp.hot { color: var(--tangerine); }
+
+  /* badge colors */
+  .b-rome { background: #ffe1d3; color: var(--coral-deep); }
+  .b-sea { background: var(--sea-soft); color: var(--sea); }
+  .b-beach { background: #fff0cc; color: #d49a1a; }
+  .b-wander { background: #ffe0ea; color: var(--berry); }
+  .b-adventure { background: #f3ddff; color: #9b4dca; }
+  .b-food { background: #ffe1d3; color: var(--tangerine); }
+
+  /* dot colors */
+  .d-rome { background: var(--coral-deep); }
+  .d-sea { background: var(--sea); }
+  .d-beach { background: var(--sun-yellow); color: var(--ink) !important; }
+  .d-wander { background: var(--berry); }
+  .d-adventure { background: #9b4dca; }
+  .d-food { background: var(--tangerine); }
+
+  /* ── CARD STRIPS (travel, hotels) ── */
+  .tile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.25rem; }
+  .tile {
+    background: #fff; border-radius: 22px; padding: 1.6rem; border: 2px solid var(--cream-deep);
+    box-shadow: 0 6px 22px rgba(176,74,107,0.08);
+  }
+  .tile .tag { display: inline-block; background: var(--cream-deep); color: var(--coral-deep); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.8rem; border-radius: 100px; margin-bottom: 0.8rem; }
+  .tile h4 { font-size: 1.15rem; color: var(--ink); margin-bottom: 0.2rem; }
+  .tile .addr { font-size: 0.8rem; color: var(--soft-ink); font-weight: 600; margin-bottom: 0.7rem; }
+  .tile ul { list-style: none; font-size: 0.85rem; font-weight: 600; color: #5a4540; }
+  .tile ul li { padding: 0.22rem 0; padding-left: 1.3rem; position: relative; }
+  .tile ul li::before { content: '☀'; position: absolute; left: 0; color: var(--peach); font-size: 0.8rem; }
+
+  .flight-route { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin: 0.6rem 0; }
+  .flight-route .code { font-family: 'Baloo 2'; font-size: 1.5rem; font-weight: 800; color: var(--ink); text-align: center; }
+  .flight-route .time { font-size: 0.82rem; color: var(--soft-ink); font-weight: 700; text-align: center; }
+  .flight-route .mid { flex: 1; text-align: center; color: var(--coral); font-size: 1.3rem; }
+  .flight-meta { font-size: 0.82rem; color: var(--soft-ink); font-weight: 600; border-top: 2px dashed var(--cream-deep); padding-top: 0.7rem; margin-top: 0.4rem; }
+  .flight-meta b { color: var(--ink); }
+  .warn { color: var(--sunset-red); font-weight: 800; }
+
+  /* ── FOOD ── */
+  .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+  .food-card { background: #fff; border-radius: 22px; padding: 1.5rem 1rem; text-align: center; border: 2px solid var(--cream-deep); transition: transform 0.2s; }
+  .food-card:hover { transform: translateY(-5px) rotate(-2deg); }
+  .food-card .emoji { font-size: 2.2rem; }
+  .food-card h4 { font-size: 1.05rem; margin: 0.3rem 0; color: var(--ink); }
+  .food-card p { font-size: 0.8rem; color: var(--soft-ink); font-weight: 600; }
+
+  /* ── INFO ── */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; }
+  .info-card { background: #fff; border-radius: 22px; padding: 1.5rem; border: 2px solid var(--cream-deep); }
+  .info-card h4 { font-size: 1.1rem; margin-bottom: 0.7rem; color: var(--ink); }
+  .info-card ul { list-style: none; font-size: 0.85rem; font-weight: 600; color: #5a4540; }
+  .info-card ul li { padding: 0.22rem 0; padding-left: 1.2rem; position: relative; }
+  .info-card ul li::before { content: '•'; position: absolute; left: 0; color: var(--coral); font-size: 1.1rem; }
+
+  /* ── TASKS ── */
+  .task-group { background: #fff; border-radius: 22px; padding: 1.5rem 1.7rem; margin-bottom: 1rem; border: 2px solid var(--cream-deep); }
+  .task-group h4 { font-size: 1.1rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; color: var(--ink); }
+  .task-group h4 .pri { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.7rem; border-radius: 100px; }
+  .pri-high { background: #ffdcdc; color: var(--sunset-red); }
+  .pri-med { background: #fff0cc; color: #d49a1a; }
+  .pri-low { background: #e0f3e8; color: #4a9b6b; }
+  .task-group ul { list-style: none; }
+  .task-group li { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.4rem 0; font-size: 0.9rem; font-weight: 600; color: #5a4540; cursor: pointer; }
+  .task-group li .box {
+    width: 22px; height: 22px; border: 2.5px solid var(--peach); border-radius: 8px; flex-shrink: 0; margin-top: 0.1rem;
+    display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: transparent; transition: all 0.15s;
+  }
+  .task-group li.done .box { background: var(--coral); border-color: var(--coral); color: #fff; }
+  .task-group li.done span { text-decoration: line-through; color: var(--soft-ink); }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; padding: 5rem 2rem 4rem; margin-top: 3rem; position: relative; background: linear-gradient(180deg, var(--cream) 0%, #ffe1e4 100%); }
+  .footer h2 { font-size: 2.4rem; color: var(--coral-deep); }
+  .footer h2 .acc { color: var(--tangerine); }
+  .footer p { font-weight: 600; color: var(--soft-ink); max-width: 420px; margin: 1rem auto 0; }
+  .footer .sig { margin-top: 1.75rem; font-family: 'Baloo 2'; font-size: 1.2rem; font-weight: 700; color: var(--berry); }
+  .footer .sig .heart { color: var(--sunset-red); }
+
+  /* ── RESPONSIVE: stack timeline ── */
+  @media (max-width: 680px) {
+    .timeline::before { left: 24px; }
+    .tl-item, .tl-item:nth-child(odd), .tl-item:nth-child(even) {
+      width: 100%; left: 0; text-align: left; padding: 0.8rem 0 0.8rem 3.5rem;
+    }
+    .tl-item:nth-child(odd) .tl-dot, .tl-item:nth-child(even) .tl-dot { left: 2px; right: auto; }
+    .section-header h2 { font-size: 2rem; }
+    .hero-content { margin-top: 6rem; }
+    .hero .sun { width: 160px; height: 160px; top: 14%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HERO ═══════ -->
+<div class="hero">
+  <div class="sun"></div>
+  <div class="hero-content">
+    <div class="hero-pre">Stockholm → Mediterranean → Home</div>
+    <h1>Our <span class="squiggle">Sunny</span><br>Cruise</h1>
+    <div class="hero-sub">sun, food &amp; slow days at sea ☀️</div>
+    <div class="hero-names">Liam <span class="heart">♥</span> Erica</div>
+    <div class="hero-chips">
+      <span>📅 June 5–14, 2026</span>
+      <span>🛳 10 days</span>
+      <span>⚓ 7 ports</span>
+    </div>
+    <div class="hero-ship">MSC Meraviglia</div>
+  </div>
+  <svg class="ship" viewBox="0 0 240 130" xmlns="http://www.w3.org/2000/svg">
+    <!-- funnels -->
+    <rect x="92" y="26" width="20" height="34" rx="4" fill="#e87a8f"/>
+    <rect x="120" y="20" width="20" height="40" rx="4" fill="#e87a8f"/>
+    <rect x="92" y="26" width="20" height="9" rx="4" fill="#fff8f4"/>
+    <rect x="120" y="20" width="20" height="9" rx="4" fill="#fff8f4"/>
+    <!-- upper decks -->
+    <rect x="62" y="44" width="116" height="20" rx="5" fill="#fff8f4"/>
+    <rect x="74" y="58" width="96" height="16" rx="4" fill="#ffe6cf"/>
+    <!-- windows upper -->
+    <g fill="#6a9fb5">
+      <circle cx="84" cy="54" r="2.4"/><circle cx="96" cy="54" r="2.4"/><circle cx="108" cy="54" r="2.4"/>
+      <circle cx="120" cy="54" r="2.4"/><circle cx="132" cy="54" r="2.4"/><circle cx="144" cy="54" r="2.4"/><circle cx="156" cy="54" r="2.4"/>
+    </g>
+    <!-- hull -->
+    <path d="M40 74 L200 74 L182 104 Q180 108 174 108 L66 108 Q60 108 58 104 Z" fill="#fff8f4"/>
+    <path d="M40 74 L200 74 L196 84 L44 84 Z" fill="#ff9d92"/>
+    <!-- portholes -->
+    <g fill="#6a9fb5">
+      <circle cx="72" cy="94" r="3"/><circle cx="90" cy="94" r="3"/><circle cx="108" cy="94" r="3"/>
+      <circle cx="126" cy="94" r="3"/><circle cx="144" cy="94" r="3"/><circle cx="162" cy="94" r="3"/>
+    </g>
+    <!-- flag -->
+    <rect x="129.5" y="6" width="2.5" height="16" fill="#fff8f4"/>
+    <path d="M132 7 L144 11 L132 15 Z" fill="#d96a8a"/>
+  </svg>
+  <svg class="waves" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#fff8f4" d="M0,64 C240,120 480,0 720,40 C960,80 1200,120 1440,56 L1440,120 L0,120 Z"></path>
+  </svg>
+</div>
+
+<!-- ═══════ NAV ═══════ -->
+<nav class="quicknav">
+  <a href="#days">Itinerary</a>
+  <a href="#travel">Travel</a>
+  <a href="#hotels">Hotels</a>
+  <a href="#food">Food</a>
+  <a href="#info">Packing</a>
+  <a href="#tasks">To-Do</a>
+</nav>
+
+<!-- ═══════ PHILOSOPHY ═══════ -->
+<div class="philosophy">
+  <p>This trip is about <span class="big">enjoying</span>, not optimizing. One main thing per day, plenty of rest, no rushing.</p>
+  <div class="rules">
+    <span>😌 Comfort &gt; Attractions</span>
+    <span>🌀 Flexible &gt; Overbooked</span>
+    <span>✨ Vibes &gt; Checklists</span>
+  </div>
+  <div class="balance">Roughly <b>60% relaxation</b> · <b>40% exploration</b></div>
+</div>
+
+<!-- ═══════ ITINERARY ═══════ -->
+<div id="days" class="section-header">
+  <div class="kicker">The Plan</div>
+  <h2>Day by <span class="acc">Day</span></h2>
+  <p>Loosely — we can always change our minds 💛</p>
+</div>
+
+<div class="container">
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot d-rome">1</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Fri · Jun 5</span><span class="day-badge b-rome">Arrival</span></div>
+        <h3>Roman Arrival Day</h3>
+        <div class="loc">📍 Rome, Italy</div>
+        <p>Fly in (land 18:15), taxi to our Monti hotel (~€55). Check in, dinner nearby, a casual evening wander, early night before cruise day.</p>
+        <div class="day-temp hot">☀️ ~28–32 °C</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-rome">2</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Sat · Jun 6</span><span class="day-badge b-rome">Embark</span></div>
+        <h3>Embarkation Day</h3>
+        <div class="loc">📍 Rome → Naples → Ship</div>
+        <p>Train Termini 09:41 → Napoli Centrale 10:53, taxi to port. Check-in 12:30, then lunch, explore, unpack. Sail away ~16:30 — our first one!</p>
+        <div class="day-note"><b>Note:</b> 12:30 is check-in, not departure. The 09:41 train gives a comfy margin.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-beach">3</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Sun · Jun 7</span><span class="day-badge b-beach">Relax</span></div>
+        <h3>Beach Day</h3>
+        <div class="loc">📍 Livorno, Italy <span class="hrs">09–19</span></div>
+        <p>No Florence marathon — we've got enough cities. Just an easy coastal day: swimming, sun, good food, zero stress.</p>
+        <div class="day-temp">🌊 ~24–28 °C · comfiest port</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-wander">4</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Mon · Jun 8</span><span class="day-badge b-wander">City</span></div>
+        <h3>Wander Day</h3>
+        <div class="loc">📍 Marseille, France <span class="hrs">10–19</span></div>
+        <p>The Old Port, cafés, harbor views, slow walking. No excursion. If we're tired we just sit, eat, and people-watch.</p>
+        <div class="day-temp">☀️ ~24–29 °C</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-wander">5</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Tue · Jun 9</span><span class="day-badge b-wander">City</span></div>
+        <h3>Barcelona Redemption</h3>
+        <div class="loc">📍 Barcelona, Spain <span class="hrs">08–18</span></div>
+        <p>Been here before — so we do it right this time. Food, shopping, wandering, and the spots we missed. Second visits are the best.</p>
+        <div class="day-temp">☀️ ~25–29 °C</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-sea">6</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Wed · Jun 10</span><span class="day-badge b-sea">Sea Day</span></div>
+        <h3>Full Relaxation Day</h3>
+        <div class="loc">📍 At Sea</div>
+        <p>The whole point of a cruise. Pool, sun, drinks, the balcony, naps, sunset on deck. No port, no plan, no shoes.</p>
+        <div class="day-note">An important recovery day — let's protect it 🧘</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-adventure">7</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Thu · Jun 11</span><span class="day-badge b-adventure">Adventure</span></div>
+        <h3>Tunisia Adventure</h3>
+        <div class="loc">📍 La Goulette, Tunisia <span class="hrs">08–18</span></div>
+        <p>The most unique day — a little Alchemist energy. Bazaars &amp; the Medina of Tunis, shopping, then the blue-and-white streets of Sidi Bou Said. Hottest port — hats, sunscreen, water, cash for the souks.</p>
+        <div class="day-note excursion"><b>Booked — TUN02:</b> Tunis &amp; Sidi Bou Said · 5 hrs · 718 SEK pp. Drive to Tunis → Medina → shopping → Sidi Bou Said → return.</div>
+        <div class="day-temp hot">🔥 ~28–34 °C · hottest!</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-food">8</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Fri · Jun 12</span><span class="day-badge b-food">Food + Beach</span></div>
+        <h3>Sicilian Food Day</h3>
+        <div class="loc">📍 Palermo, Sicily</div>
+        <p>An eating day: arancini, cannoli, granita, street food. Then a taxi to Mondello beach to relax. No museums — just food &amp; sun.</p>
+        <div class="day-temp hot">☀️ ~27–32 °C</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-rome">9</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Sat · Jun 13</span><span class="day-badge b-rome">Finale</span></div>
+        <h3>Naples Finale Day</h3>
+        <div class="loc">📍 Naples → Rome</div>
+        <p>Ship in at 06:30 but no rush — off ~08:00–09:00. Store luggage, eat real Naples pizza + espresso, waterfront stroll. Then a same-day train to Rome, check into our Pantheon hotel, dinner, evening walk.</p>
+        <div class="day-note"><b>Train:</b> not pre-booked on purpose — flexible, buy same-day.</div>
+        <div class="day-temp hot">☀️ Naples ~27–31 · Rome ~28–32 °C</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot d-rome">10</div>
+      <div class="day-card">
+        <div class="top"><span class="day-date">Sun · Jun 14</span><span class="day-badge b-rome">Farewell</span></div>
+        <h3>Roman Farewell</h3>
+        <div class="loc">📍 Rome → Stockholm</div>
+        <p>Check out ~10:00, leave bags. A last day in the historic center — Pantheon, Piazza Navona, Trevi, gelato, long lunch. Grab bags ~17:00, then to FCO. Flight home 20:35.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════ TRAVEL ═══════ -->
+<div id="travel" class="section-header">
+  <div class="kicker">Getting There &amp; Back</div>
+  <h2>Flights &amp; <span class="acc">Trains</span></h2>
+</div>
+
+<div class="container">
+  <div class="tile-grid">
+    <div class="tile">
+      <span class="tag">✈ Out · Jun 5 · Ryanair FR914</span>
+      <div class="flight-route">
+        <div><div class="code">ARN</div><div class="time">15:00</div></div>
+        <div class="mid">✈</div>
+        <div><div class="code">FCO</div><div class="time">18:15</div></div>
+      </div>
+      <div class="flight-meta">Stockholm → Rome · <b>Seats 33A &amp; 33B</b> · 20 kg bag. Needs the <b>Ryanair app</b> for boarding passes.</div>
+    </div>
+
+    <div class="tile">
+      <span class="tag">✈ Back · Jun 14 · Norwegian D84358</span>
+      <div class="flight-route">
+        <div><div class="code">FCO</div><div class="time">20:35</div></div>
+        <div class="mid">✈</div>
+        <div><div class="code">ARN</div><div class="time">23:45</div></div>
+      </div>
+      <div class="flight-meta">Rome → Stockholm · <b>1 checked + cabin + under-seat</b>. Name typo fixed ✓</div>
+    </div>
+
+    <div class="tile">
+      <span class="tag">🚆 Jun 6 · Rome → Naples</span>
+      <div class="flight-route">
+        <div><div class="code" style="font-size:1.15rem;">Termini</div><div class="time">09:41</div></div>
+        <div class="mid">🚆</div>
+        <div><div class="code" style="font-size:1.15rem;">Centrale</div><div class="time">10:53</div></div>
+      </div>
+      <div class="flight-meta">1h 12m · Flex Smart · ~€85.80 for two. <span class="warn">⚠ Not booked yet — book before the trip!</span></div>
+    </div>
+
+    <div class="tile">
+      <span class="tag">🚕 Transfers</span>
+      <div class="flight-meta" style="border-top:none; padding-top:0;">
+        <p style="margin-bottom:0.4rem;"><b>Jun 5:</b> FCO → Monti · taxi ~€55 · 40–50 min</p>
+        <p style="margin-bottom:0.4rem;"><b>Jun 6:</b> Centrale → port · taxi ~€10–20 · 10–15 min</p>
+        <p><b>Jun 14:</b> Hotel → FCO · taxi €55–70, or Leonardo Express ~€28/two. Public transport unless we're wiped.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ HOTELS ═══════ -->
+<div id="hotels" class="section-header">
+  <div class="kicker">Where We Sleep</div>
+  <h2>Our <span class="acc">Hotels</span></h2>
+</div>
+
+<div class="container">
+  <div class="tile-grid">
+    <div class="tile">
+      <span class="tag">🏛 Jun 5 → 6 · Monti</span>
+      <h4>Residenza Maritti Classic Rooms</h4>
+      <div class="addr">Via Tor de' Conti 17, Rione Monti</div>
+      <ul>
+        <li>Steps from the Forum &amp; Colosseum</li>
+        <li>~1.6 km from Roma Termini</li>
+        <li>Check-in 14:00–20:00 · out 08:00–10:00</li>
+        <li>Pre-cruise base — booked ✓</li>
+      </ul>
+    </div>
+    <div class="tile">
+      <span class="tag">🏛 Jun 13 → 14 · Pantheon</span>
+      <h4>Temple View FCollection Relais</h4>
+      <div class="addr">Largo De Ginnasi 2, Pantheon area</div>
+      <ul>
+        <li>Deluxe Double, city view · ~2121 SEK</li>
+        <li>Breakfast ✓ · AC ✓ · bag storage ✓</li>
+        <li>Walk to Pantheon, Navona, Trevi</li>
+        <li>Chosen for a special last night ♥</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOD ═══════ -->
+<div id="food" class="section-header">
+  <div class="kicker">The Important Stuff</div>
+  <h2>Food <span class="acc">Highlights</span></h2>
+</div>
+
+<div class="container">
+  <div class="food-grid">
+    <div class="food-card"><div class="emoji">🍕</div><h4>Naples</h4><p>Pizza &amp; espresso</p></div>
+    <div class="food-card"><div class="emoji">🍡</div><h4>Palermo</h4><p>Arancini, cannoli, granita</p></div>
+    <div class="food-card"><div class="emoji">🍝</div><h4>Rome</h4><p>Pasta &amp; gelato</p></div>
+    <div class="food-card"><div class="emoji">🍵</div><h4>Tunisia</h4><p>Mint tea &amp; market snacks</p></div>
+    <div class="food-card"><div class="emoji">🥘</div><h4>Barcelona</h4><p>The spots we missed</p></div>
+  </div>
+</div>
+
+<!-- ═══════ INFO ═══════ -->
+<div id="info" class="section-header">
+  <div class="kicker">Good to Know</div>
+  <h2>Packing &amp; <span class="acc">Practical</span></h2>
+</div>
+
+<div class="container">
+  <div class="info-grid">
+    <div class="info-card"><h4>📄 Documents</h4><ul><li>Passports / ID</li><li>Flight &amp; hotel confirmations</li><li>Cruise docs + luggage tags</li><li>Train tickets</li><li>Cards + cash</li></ul></div>
+    <div class="info-card"><h4>👗 Clothing</h4><ul><li>T-shirts, shorts, swimwear</li><li>Light evening outfit</li><li>Underwear, socks, sleepwear</li><li>Walking shoes + sandals</li></ul></div>
+    <div class="info-card"><h4>🧴 Sun</h4><ul><li>Sunglasses</li><li>Sunscreen (lots!)</li><li>Hat / cap</li></ul></div>
+    <div class="info-card"><h4>🔌 Electronics</h4><ul><li>Phones + chargers</li><li>Power bank</li><li>Earbuds</li></ul></div>
+    <div class="info-card"><h4>🏖 Towels</h4><ul><li>Don't bring beach towels!</li><li>MSC provides pool towels</li><li>Take them off-ship where allowed</li></ul></div>
+    <div class="info-card"><h4>💶 Money</h4><ul><li>Bring ~50–100 € cash</li><li>Card works everywhere in Italy</li><li>Cash for Tunisia markets</li></ul></div>
+    <div class="info-card"><h4>🚕 Taxis</h4><ul><li>Official taxis only</li><li>Confirm price first</li><li>Naples is chaotic but fine</li></ul></div>
+    <div class="info-card"><h4>📱 Apps</h4><ul><li>Ryanair, Norwegian, MSC</li><li>Offline maps: Rome, Naples, Palermo</li></ul></div>
+  </div>
+</div>
+
+<!-- ═══════ TASKS ═══════ -->
+<div id="tasks" class="section-header">
+  <div class="kicker">Before We Go</div>
+  <h2>To-Do <span class="acc">List</span></h2>
+  <p>Tap to check things off ✔️</p>
+</div>
+
+<div class="container">
+  <div class="task-group">
+    <h4>High Priority <span class="pri pri-high">Must Do</span></h4>
+    <ul>
+      <li><span class="box">✓</span><span>Book Rome → Naples train (09:41)</span></li>
+      <li><span class="box">✓</span><span>Complete MSC check-in</span></li>
+      <li><span class="box">✓</span><span>Print / download cruise documents</span></li>
+      <li><span class="box">✓</span><span>Print / download luggage tags</span></li>
+      <li><span class="box">✓</span><span>Download Ryanair app</span></li>
+      <li><span class="box">✓</span><span>Download Norwegian app</span></li>
+      <li><span class="box">✓</span><span>Download MSC app</span></li>
+    </ul>
+  </div>
+  <div class="task-group">
+    <h4>Medium Priority <span class="pri pri-med">Soon</span></h4>
+    <ul>
+      <li><span class="box">✓</span><span>Decide Palermo beach logistics</span></li>
+      <li><span class="box">✓</span><span>Decide airport transport home</span></li>
+      <li><span class="box">✓</span><span>Offline maps: Rome, Naples, Palermo</span></li>
+    </ul>
+  </div>
+  <div class="task-group">
+    <h4>Low Priority <span class="pri pri-low">Nice to Have</span></h4>
+    <ul>
+      <li><span class="box">✓</span><span>Restaurant research</span></li>
+      <li><span class="box">✓</span><span>Gelato recommendations</span></li>
+      <li><span class="box">✓</span><span>Souvenir planning</span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<div class="footer">
+  <h2>Let's have the <span class="acc">best</span> time ☀️</h2>
+  <p>Comfort over coverage. Rest when tired. Eat everything. Watch every sunset.</p>
+  <div class="sig">— Liam <span class="heart">♥</span> Erica · June 2026</div>
+</div>
+
+<script>
+  document.querySelectorAll('.task-group li').forEach(function(li){
+    li.addEventListener('click', function(){ li.classList.toggle('done'); });
+  });
+</script>
+
+</body>
+</html>
