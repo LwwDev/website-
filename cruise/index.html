@@ -99,7 +99,7 @@
             color: var(--text);
         }
 
-        .copy, .viewer-copy, .helper {
+        .copy, .viewer-copy {
             color: var(--muted);
             line-height: 1.7;
             font-size: 14px;
@@ -192,10 +192,6 @@
             color: var(--accent);
         }
 
-        .helper {
-            margin-top: 16px;
-        }
-
         .viewer {
             display: none;
             min-height: 100vh;
@@ -266,7 +262,6 @@
                 <div class="panel-top">
                     <div class="eyebrow">Private Route</div>
                     <h1>Cruise<br><span class="title-accent">Access</span></h1>
-                    <p class="copy">Type the right name and the trip page opens. Anything else sends you back to the main site.</p>
                 </div>
 
                 <form id="login-form">
@@ -279,7 +274,6 @@
                 </form>
 
                 <p id="status" class="status" aria-live="polite"></p>
-                <p id="helper" class="helper">Allowed names: Erica or Liam.</p>
             </section>
         </main>
 
@@ -299,7 +293,6 @@
         const gate = document.getElementById('gate');
         const viewer = document.getElementById('viewer');
         const viewerFrame = document.getElementById('viewer-frame');
-        const helper = document.getElementById('helper');
         const status = document.getElementById('status');
         const form = document.getElementById('login-form');
         const submitBtn = document.getElementById('submit-btn');
@@ -389,12 +382,8 @@
                 const hasAccess = sessionStorage.getItem('cruise_access') === 'granted';
                 if (hasAccess) {
                     await loadCruisePage();
-                } else {
-                    helper.textContent = 'Type Erica or Liam to open the trip page.';
                 }
-            } catch {
-                helper.textContent = 'Type Erica or Liam to open the trip page.';
-            }
+            } catch {}
         }
 
         void boot();
