@@ -11,7 +11,6 @@
     <style>
         :root {
             --bg: #050505;
-            --bg-soft: #0d0d0d;
             --panel: rgba(16, 16, 16, 0.92);
             --panel-strong: rgba(12, 12, 12, 0.96);
             --line: rgba(255, 255, 255, 0.08);
@@ -19,7 +18,6 @@
             --text: #f2f2ef;
             --muted: #9b9b97;
             --accent: #c7c7c2;
-            --accent-soft: rgba(255, 255, 255, 0.06);
             --accent-strong: #ffffff;
             --danger: #ef9c9c;
         }
@@ -90,10 +88,6 @@
             letter-spacing: 0.18em;
             font-size: 11px;
             font-weight: 600;
-            display: inline-block;
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
         }
 
         h1 {
@@ -123,13 +117,7 @@
             margin: -32px -28px 22px;
             padding: 30px 28px 22px;
             border-radius: 28px 28px 0 0;
-            position: relative;
-            overflow: hidden;
             border-bottom: 1px solid var(--line);
-        }
-
-        .panel-top::after {
-            content: none;
         }
 
         form {
@@ -156,8 +144,6 @@
             color: var(--text);
             padding: 14px 15px;
             font: inherit;
-            font-weight: 400;
-            box-shadow: none;
         }
 
         input:focus {
@@ -179,7 +165,6 @@
             color: #090909;
             font-weight: 600;
             transition: transform 0.18s ease, opacity 0.18s ease;
-            box-shadow: none;
         }
 
         .submit-btn:hover, .logout-btn:hover {
@@ -197,7 +182,6 @@
             margin-top: 16px;
             font-size: 13px;
             color: var(--muted);
-            font-weight: 400;
         }
 
         .status.error {
@@ -282,25 +266,20 @@
                 <div class="panel-top">
                     <div class="eyebrow">Private Route</div>
                     <h1>Cruise<br><span class="title-accent">Access</span></h1>
-                    <p class="copy">A private route for the trip page. Sign in to unlock the itinerary, hotels, and the rest of the plan.</p>
+                    <p class="copy">Type the right name and the trip page opens. Anything else sends you back to the main site.</p>
                 </div>
 
                 <form id="login-form">
                     <label>
-                        Email
-                        <input id="email" type="email" name="email" autocomplete="username" required>
-                    </label>
-
-                    <label>
-                        Password
-                        <input id="password" type="password" name="password" autocomplete="current-password" required>
+                        Name
+                        <input id="username" type="text" name="username" autocomplete="username" required>
                     </label>
 
                     <button id="submit-btn" class="submit-btn" type="submit">Unlock Cruise Page</button>
                 </form>
 
                 <p id="status" class="status" aria-live="polite"></p>
-                <p id="helper" class="helper">Use the private Supabase email and password for this page.</p>
+                <p id="helper" class="helper">Allowed names: Erica or Liam.</p>
             </section>
         </main>
 
@@ -308,7 +287,7 @@
             <header class="viewer-header">
                 <div>
                     <div class="viewer-meta">Authenticated View</div>
-                    <div class="viewer-copy">The trip page below is loaded only after a valid private session is confirmed.</div>
+                    <div class="viewer-copy">The trip page below is loaded after the name check passes.</div>
                 </div>
                 <button id="logout-btn" class="logout-btn" type="button">Lock Page</button>
             </header>
@@ -316,11 +295,7 @@
         </section>
     </div>
 
-    <script src="/api/cruise-config.js"></script>
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-
-        const config = window.CRUISE_CONFIG ?? {};
+    <script>
         const gate = document.getElementById('gate');
         const viewer = document.getElementById('viewer');
         const viewerFrame = document.getElementById('viewer-frame');
@@ -329,9 +304,7 @@
         const form = document.getElementById('login-form');
         const submitBtn = document.getElementById('submit-btn');
         const logoutBtn = document.getElementById('logout-btn');
-        const urlLooksConfigured = typeof config.supabaseUrl === 'string' && /^https:\/\/.+/.test(config.supabaseUrl);
-        const keyLooksConfigured = typeof config.supabaseAnonKey === 'string' && config.supabaseAnonKey.length > 20;
-        let supabase = null;
+        const allowedNames = new Set(['erica', 'liam']);
 
         function setStatus(message, type = '') {
             status.textContent = message;
@@ -354,38 +327,13 @@
         }
 
         async function loadCruisePage() {
-            if (!supabase) return;
-
             setBusy(true);
-            setStatus('Loading the private trip page...', 'success');
+            setStatus('Opening the cruise page...', 'success');
 
-            const { data, error } = await supabase.auth.getSession();
-            if (error || !data.session?.access_token) {
-                showGate();
-                setBusy(false);
-                setStatus('Your session expired. Please sign in again.', 'error');
-                return;
-            }
-
-            const response = await fetch('/api/cruise-content', {
-                headers: {
-                    Authorization: `Bearer ${data.session.access_token}`
-                },
-                cache: 'no-store'
-            });
-
+            const response = await fetch('/api/cruise-content', { cache: 'no-store' });
             if (!response.ok) {
                 showGate();
                 setBusy(false);
-                if (response.status === 401) {
-                    setStatus('Your session expired. Please sign in again.', 'error');
-                    return;
-                }
-                if (response.status === 403) {
-                    setStatus('This account is not allowed to view the cruise page.', 'error');
-                    return;
-                }
-
                 setStatus('The private cruise page could not be loaded right now.', 'error');
                 return;
             }
@@ -399,63 +347,53 @@
 
         async function handleLogin(event) {
             event.preventDefault();
-            if (!supabase) return;
 
             const formData = new FormData(form);
-            const email = String(formData.get('email') ?? '').trim();
-            const password = String(formData.get('password') ?? '');
+            const username = String(formData.get('username') ?? '').trim().toLowerCase();
 
             setBusy(true);
-            setStatus('Checking credentials...', 'success');
+            setStatus('Checking name...', 'success');
 
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-            if (error) {
-                setBusy(false);
-                setStatus(error.message || 'Sign-in failed.', 'error');
+            if (!allowedNames.has(username)) {
+                window.location.replace('https://liamwohlstedt.xyz');
                 return;
+            }
+
+            try {
+                sessionStorage.setItem('cruise_access', 'granted');
+            } catch {
+                // ignore storage failures and continue
             }
 
             await loadCruisePage();
         }
 
         async function handleLogout() {
-            if (!supabase) return;
             setBusy(true);
-            await supabase.auth.signOut({ scope: 'local' });
+            try {
+                sessionStorage.removeItem('cruise_access');
+            } catch {
+                // ignore storage failures
+            }
             viewerFrame.srcdoc = '';
             showGate();
             setBusy(false);
             setStatus('The private page is locked again.');
         }
 
+        form.addEventListener('submit', handleLogin);
+        logoutBtn.addEventListener('click', handleLogout);
+
         async function boot() {
-            if (!urlLooksConfigured || !keyLooksConfigured) {
-                setStatus('Add your Supabase environment variables before this page can work.', 'error');
-                helper.textContent = 'You still need the Supabase keys in Vercel plus the actual users in Supabase Auth.';
-                return;
-            }
-
-            supabase = createClient(config.supabaseUrl, config.supabaseAnonKey, {
-                auth: {
-                    persistSession: true,
-                    autoRefreshToken: true,
-                    detectSessionInUrl: false
+            try {
+                const hasAccess = sessionStorage.getItem('cruise_access') === 'granted';
+                if (hasAccess) {
+                    await loadCruisePage();
+                } else {
+                    helper.textContent = 'Type Erica or Liam to open the trip page.';
                 }
-            });
-
-            form.addEventListener('submit', handleLogin);
-            logoutBtn.addEventListener('click', handleLogout);
-
-            supabase.auth.onAuthStateChange((_event, session) => {
-                if (!session) {
-                    viewerFrame.srcdoc = '';
-                    showGate();
-                }
-            });
-
-            const { data } = await supabase.auth.getSession();
-            if (data.session) {
-                await loadCruisePage();
+            } catch {
+                helper.textContent = 'Type Erica or Liam to open the trip page.';
             }
         }
 
