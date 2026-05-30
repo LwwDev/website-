@@ -8,16 +8,8 @@
       "dest": "/cruise/index.html"
     },
     {
-      "src": "^/api/cruise-login/?$",
-      "dest": "/api/cruise-login.js"
-    },
-    {
-      "src": "^/api/cruise-logout/?$",
-      "dest": "/api/cruise-logout.js"
-    },
-    {
-      "src": "^/api/cruise-session/?$",
-      "dest": "/api/cruise-session.js"
+      "src": "^/api/cruise-config/?$",
+      "dest": "/api/cruise-config.js"
     },
     {
       "src": "^/api/cruise-content/?$",

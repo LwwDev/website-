@@ -1,12 +1,12 @@
-# Cruise Login Setup
+# Cruise Auth Setup
 
 The private cruise route lives at `/cruise` and is not linked from the public homepage.
 
 ## What this flow does
 
-- `/cruise` shows a simple private name login.
-- `POST /api/cruise-login` checks the name and sets a secure session cookie.
-- `GET /api/cruise-content` only returns the trip page if that cookie is valid.
+- `/cruise` shows a Supabase email/password login.
+- After a successful sign-in, the page requests `/api/cruise-content`.
+- `/api/cruise-content` verifies the Supabase access token server-side before returning the private HTML.
 - The actual trip page is stored in `private/cruise-page.html`, so it is not published as a public static route.
 - Direct requests to `/private/*`, `/cruise-sunset-soft.html`, and `/cruise.html` are blocked by `vercel.json`.
 
@@ -14,26 +14,21 @@ The private cruise route lives at `/cruise` and is not linked from the public ho
 
 Add these in your Vercel project settings:
 
-- `CRUISE_LOGIN_NAME`
-- `CRUISE_SESSION_SECRET`
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `CRUISE_ALLOWED_EMAILS`
 
-Recommended:
-
-- `CRUISE_LOGIN_NAME`: `Erica,Liam`
-- `CRUISE_SESSION_SECRET`: a long random string, at least 32 characters
-
-You can allow more than one name by separating them with commas:
+Recommended `CRUISE_ALLOWED_EMAILS` value:
 
 ```txt
-Erica,Liam
+erica@example.com,liam@example.com
 ```
-
-## Note
-
-This is intentionally simpler than a real username/password login. It is fine for a lightweight private page, but it is less secure than using a real password.
 
 ## Notes
 
+- In Supabase, enable `Email` auth and create the actual users under `Authentication` → `Users`.
+- `SUPABASE_ANON_KEY` is safe in the browser. `SUPABASE_SERVICE_ROLE_KEY` must stay server-only in Vercel.
 - The current local source file is [cruise-sunset-soft.html](/c:/code/Personal%20website/cruise-sunset-soft.html).
 - The older draft is still [cruise.html](/c:/code/Personal%20website/cruise.html).
 - The deployed private version is [cruise-page.html](/c:/code/Personal%20website/private/cruise-page.html).

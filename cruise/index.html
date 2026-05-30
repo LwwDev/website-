@@ -105,7 +105,7 @@
             color: var(--text);
         }
 
-        .copy, .viewer-copy {
+        .copy, .viewer-copy, .helper {
             color: var(--muted);
             line-height: 1.7;
             font-size: 14px;
@@ -208,6 +208,10 @@
             color: var(--accent);
         }
 
+        .helper {
+            margin-top: 16px;
+        }
+
         .viewer {
             display: none;
             min-height: 100vh;
@@ -278,19 +282,25 @@
                 <div class="panel-top">
                     <div class="eyebrow">Private Route</div>
                     <h1>Cruise<br><span class="title-accent">Access</span></h1>
-                    <p class="copy">A private route for the trip page. Enter your name to unlock the itinerary, hotels, and the rest of the plan.</p>
+                    <p class="copy">A private route for the trip page. Sign in to unlock the itinerary, hotels, and the rest of the plan.</p>
                 </div>
 
                 <form id="login-form">
                     <label>
-                        Name
-                        <input id="username" type="text" name="username" autocomplete="username" required>
+                        Email
+                        <input id="email" type="email" name="email" autocomplete="username" required>
+                    </label>
+
+                    <label>
+                        Password
+                        <input id="password" type="password" name="password" autocomplete="current-password" required>
                     </label>
 
                     <button id="submit-btn" class="submit-btn" type="submit">Unlock Cruise Page</button>
                 </form>
 
                 <p id="status" class="status" aria-live="polite"></p>
+                <p id="helper" class="helper">Use the private Supabase email and password for this page.</p>
             </section>
         </main>
 
@@ -306,14 +316,22 @@
         </section>
     </div>
 
-    <script>
+    <script src="/api/cruise-config.js"></script>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+        const config = window.CRUISE_CONFIG ?? {};
         const gate = document.getElementById('gate');
         const viewer = document.getElementById('viewer');
         const viewerFrame = document.getElementById('viewer-frame');
+        const helper = document.getElementById('helper');
         const status = document.getElementById('status');
         const form = document.getElementById('login-form');
         const submitBtn = document.getElementById('submit-btn');
         const logoutBtn = document.getElementById('logout-btn');
+        const urlLooksConfigured = typeof config.supabaseUrl === 'string' && /^https:\/\/.+/.test(config.supabaseUrl);
+        const keyLooksConfigured = typeof config.supabaseAnonKey === 'string' && config.supabaseAnonKey.length > 20;
+        let supabase = null;
 
         function setStatus(message, type = '') {
             status.textContent = message;
@@ -336,16 +354,35 @@
         }
 
         async function loadCruisePage() {
+            if (!supabase) return;
+
             setBusy(true);
             setStatus('Loading the private trip page...', 'success');
 
-            const response = await fetch('/api/cruise-content', { cache: 'no-store' });
+            const { data, error } = await supabase.auth.getSession();
+            if (error || !data.session?.access_token) {
+                showGate();
+                setBusy(false);
+                setStatus('Your session expired. Please sign in again.', 'error');
+                return;
+            }
+
+            const response = await fetch('/api/cruise-content', {
+                headers: {
+                    Authorization: `Bearer ${data.session.access_token}`
+                },
+                cache: 'no-store'
+            });
 
             if (!response.ok) {
                 showGate();
                 setBusy(false);
                 if (response.status === 401) {
                     setStatus('Your session expired. Please sign in again.', 'error');
+                    return;
+                }
+                if (response.status === 403) {
+                    setStatus('This account is not allowed to view the cruise page.', 'error');
                     return;
                 }
 
@@ -362,25 +399,19 @@
 
         async function handleLogin(event) {
             event.preventDefault();
+            if (!supabase) return;
 
             const formData = new FormData(form);
-            const username = String(formData.get('username') ?? '').trim();
+            const email = String(formData.get('email') ?? '').trim();
+            const password = String(formData.get('password') ?? '');
 
             setBusy(true);
-            setStatus('Checking name...', 'success');
+            setStatus('Checking credentials...', 'success');
 
-            const response = await fetch('/api/cruise-login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username })
-            });
-
-            if (!response.ok) {
-                const result = await response.json().catch(() => ({ error: 'Sign-in failed.' }));
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
                 setBusy(false);
-                setStatus(result.error || 'Sign-in failed.', 'error');
+                setStatus(error.message || 'Sign-in failed.', 'error');
                 return;
             }
 
@@ -388,29 +419,43 @@
         }
 
         async function handleLogout() {
+            if (!supabase) return;
             setBusy(true);
-            await fetch('/api/cruise-logout', {
-                method: 'POST'
-            });
+            await supabase.auth.signOut({ scope: 'local' });
             viewerFrame.srcdoc = '';
             showGate();
             setBusy(false);
             setStatus('The private page is locked again.');
         }
 
-        form.addEventListener('submit', handleLogin);
-        logoutBtn.addEventListener('click', handleLogout);
-
         async function boot() {
-            try {
-                const response = await fetch('/api/cruise-session', { cache: 'no-store' });
-                const result = await response.json();
+            if (!urlLooksConfigured || !keyLooksConfigured) {
+                setStatus('Add your Supabase environment variables before this page can work.', 'error');
+                helper.textContent = 'You still need the Supabase keys in Vercel plus the actual users in Supabase Auth.';
+                return;
+            }
 
-                if (result.authenticated) {
-                    await loadCruisePage();
+            supabase = createClient(config.supabaseUrl, config.supabaseAnonKey, {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: false
                 }
-            } catch {
-                setStatus('The private login could not be initialized right now.', 'error');
+            });
+
+            form.addEventListener('submit', handleLogin);
+            logoutBtn.addEventListener('click', handleLogout);
+
+            supabase.auth.onAuthStateChange((_event, session) => {
+                if (!session) {
+                    viewerFrame.srcdoc = '';
+                    showGate();
+                }
+            });
+
+            const { data } = await supabase.auth.getSession();
+            if (data.session) {
+                await loadCruisePage();
             }
         }
 
