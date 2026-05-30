@@ -19,8 +19,14 @@ Add these in your Vercel project settings:
 
 Recommended:
 
-- `CRUISE_LOGIN_NAME`: `Erica`
+- `CRUISE_LOGIN_NAME`: `Erica,Liam`
 - `CRUISE_SESSION_SECRET`: a long random string, at least 32 characters
+
+You can allow more than one name by separating them with commas:
+
+```txt
+Erica,Liam
+```
 
 ## Note
 

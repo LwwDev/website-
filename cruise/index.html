@@ -105,7 +105,7 @@
             color: var(--text);
         }
 
-        .copy, .helper, .viewer-copy {
+        .copy, .viewer-copy {
             color: var(--muted);
             line-height: 1.7;
             font-size: 14px;
@@ -208,14 +208,6 @@
             color: var(--accent);
         }
 
-        .helper {
-            margin-top: 18px;
-            padding: 14px 16px;
-            border-radius: 16px;
-            background: var(--accent-soft);
-            border: 1px solid rgba(214, 178, 133, 0.18);
-        }
-
         .viewer {
             display: none;
             min-height: 100vh;
@@ -299,7 +291,6 @@
                 </form>
 
                 <p id="status" class="status" aria-live="polite"></p>
-                <div id="helper" class="helper">This page uses a simple private name check and stays off the public site.</div>
             </section>
         </main>
 
@@ -319,7 +310,6 @@
         const gate = document.getElementById('gate');
         const viewer = document.getElementById('viewer');
         const viewerFrame = document.getElementById('viewer-frame');
-        const helper = document.getElementById('helper');
         const status = document.getElementById('status');
         const form = document.getElementById('login-form');
         const submitBtn = document.getElementById('submit-btn');
@@ -418,8 +408,6 @@
 
                 if (result.authenticated) {
                     await loadCruisePage();
-                } else {
-                    helper.textContent = 'Use the private name to open the trip page.';
                 }
             } catch {
                 setStatus('The private login could not be initialized right now.', 'error');

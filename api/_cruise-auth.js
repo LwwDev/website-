@@ -11,6 +11,13 @@ function getExpectedUsername() {
     return process.env.CRUISE_LOGIN_NAME || process.env.CRUISE_LOGIN_USERNAME || '';
 }
 
+function getAllowedNames() {
+    return getExpectedUsername()
+        .split(',')
+        .map((value) => value.trim().toLowerCase())
+        .filter(Boolean);
+}
+
 function parseCookies(req) {
     const raw = req.headers.cookie || '';
     const cookies = {};
@@ -79,17 +86,18 @@ function clearSessionCookie(res) {
 }
 
 function loginMatches(username) {
-    const expectedUsername = getExpectedUsername();
+    const allowedNames = getAllowedNames();
 
-    if (!expectedUsername) {
+    if (!allowedNames.length) {
         return false;
     }
 
-    return username.toLowerCase() === expectedUsername.toLowerCase();
+    return allowedNames.includes(username.toLowerCase());
 }
 
 module.exports = {
     clearSessionCookie,
+    getAllowedNames,
     getExpectedUsername,
     parseCookies,
     readSession,
