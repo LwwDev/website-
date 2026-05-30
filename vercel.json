@@ -8,10 +8,6 @@
       "dest": "/cruise/index.html"
     },
     {
-      "src": "^/api/cruise-content/?$",
-      "dest": "/api/cruise-content.js"
-    },
-    {
       "src": "^/(private|cruise-sunset-soft\\.html|cruise\\.html)(?:/.*)?$",
       "status": 404
     }
