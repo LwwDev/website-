@@ -82,7 +82,7 @@
             backdrop-filter: blur(18px);
         }
 
-        .eyebrow, .viewer-meta {
+        .eyebrow {
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.18em;
@@ -97,13 +97,6 @@
             line-height: 0.95;
             margin: 18px 0 12px;
             color: var(--text);
-        }
-
-        .copy, .viewer-copy {
-            color: var(--muted);
-            line-height: 1.7;
-            font-size: 14px;
-            font-weight: 400;
         }
 
         .title-accent {
@@ -157,7 +150,7 @@
             cursor: pointer;
         }
 
-        .submit-btn, .logout-btn {
+        .submit-btn {
             border: 0;
             border-radius: 999px;
             padding: 14px 18px;
@@ -167,11 +160,11 @@
             transition: transform 0.18s ease, opacity 0.18s ease;
         }
 
-        .submit-btn:hover, .logout-btn:hover {
+        .submit-btn:hover {
             transform: translateY(-1px);
         }
 
-        .submit-btn:disabled, .logout-btn:disabled {
+        .submit-btn:disabled {
             opacity: 0.6;
             cursor: wait;
             transform: none;
@@ -202,30 +195,11 @@
             display: flex;
         }
 
-        .viewer-header {
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 18px;
-            padding: 16px 20px;
-            background: var(--panel-strong);
-            border-bottom: 1px solid var(--line-strong);
-            backdrop-filter: blur(18px);
-        }
-
-        .viewer-copy {
-            margin-top: 6px;
-            font-size: 13px;
-        }
-
         .viewer-frame {
             flex: 1;
             width: 100%;
             border: 0;
-            min-height: calc(100vh - 78px);
+            min-height: 100vh;
             background: #fff;
         }
 
@@ -244,14 +218,6 @@
                 padding: 24px 20px 18px;
             }
 
-            .viewer-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .logout-btn {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -278,13 +244,6 @@
         </main>
 
         <section id="viewer" class="viewer" aria-live="polite">
-            <header class="viewer-header">
-                <div>
-                    <div class="viewer-meta">Authenticated View</div>
-                    <div class="viewer-copy">The trip page below is loaded after the name check passes.</div>
-                </div>
-                <button id="logout-btn" class="logout-btn" type="button">Lock Page</button>
-            </header>
             <iframe id="viewer-frame" class="viewer-frame" title="Cruise plan"></iframe>
         </section>
     </div>
@@ -296,7 +255,6 @@
         const status = document.getElementById('status');
         const form = document.getElementById('login-form');
         const submitBtn = document.getElementById('submit-btn');
-        const logoutBtn = document.getElementById('logout-btn');
         const allowedNames = new Set(['erica', 'liam']);
 
         function setStatus(message, type = '') {
@@ -306,7 +264,6 @@
 
         function setBusy(isBusy) {
             submitBtn.disabled = isBusy;
-            logoutBtn.disabled = isBusy;
         }
 
         function showGate() {
@@ -361,21 +318,7 @@
             await loadCruisePage();
         }
 
-        async function handleLogout() {
-            setBusy(true);
-            try {
-                sessionStorage.removeItem('cruise_access');
-            } catch {
-                // ignore storage failures
-            }
-            viewerFrame.srcdoc = '';
-            showGate();
-            setBusy(false);
-            setStatus('The private page is locked again.');
-        }
-
         form.addEventListener('submit', handleLogin);
-        logoutBtn.addEventListener('click', handleLogout);
 
         async function boot() {
             try {
