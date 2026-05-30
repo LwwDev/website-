@@ -583,6 +583,17 @@
 </div>
 
 <script>
+  document.querySelectorAll('.quicknav a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      var targetId = link.getAttribute('href');
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
   document.querySelectorAll('.task-group li').forEach(function(li){
     li.addEventListener('click', function(){ li.classList.toggle('done'); });
   });
